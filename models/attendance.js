@@ -1,5 +1,4 @@
 const { Model } = require('sequelize');
-
 module.exports = (sequelize, DataTypes) => {
   class attendance extends Model {
     /**
@@ -9,15 +8,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.User);
+      this.belongsTo(models.attendanceGroups);
+      this.hasOne(models.attendanceRecorded);
     }
   }
   attendance.init(
     {
-      attendance_id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDv4,
-      },
+      attendanceGroupsId: DataTypes.INTEGER,
     },
     {
       sequelize,
@@ -26,3 +23,4 @@ module.exports = (sequelize, DataTypes) => {
   );
   return attendance;
 };
+

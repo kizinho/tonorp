@@ -1,7 +1,6 @@
 const { Model } = require('sequelize');
-
 module.exports = (sequelize, DataTypes) => {
-  class workspace extends Model {
+  class groupSetting extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -9,17 +8,18 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.User);
+      this.belongsTo(models.attendanceGroups);
     }
   }
-  workspace.init(
+  groupSetting.init(
     {
-      name: DataTypes.STRING,
+      chatLocked: DataTypes.BOOLEAN,
     },
     {
       sequelize,
-      modelName: 'workspace',
+      modelName: 'groupSetting',
     }
   );
-  return workspace;
+  return groupSetting;
 };
+

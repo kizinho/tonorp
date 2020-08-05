@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
 
-export const userAttendances = (request, response) => {
-  response.send('User attendance');
+exports.userAttendances = (user_id) => {
+  return 'user attendance';
 };

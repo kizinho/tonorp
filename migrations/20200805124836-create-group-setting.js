@@ -1,15 +1,15 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface
-      .createTable('attendances', {
+      .createTable('groupSettings', {
         id: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
           type: Sequelize.INTEGER,
         },
-        attendance_id: {
-          type: Sequelize.UUID,
+        chatLocked: {
+          type: Sequelize.BOOLEAN,
         },
         createdAt: {
           allowNull: false,
@@ -20,21 +20,19 @@ module.exports = {
           type: Sequelize.DATE,
         },
       })
-      .then(() => {
-        return queryInterface.addColumn('attendances', 'UserId', {
+      .then(async () => {
+        await queryInterface.addColumn('groupSettings', 'attendanceGroupsId', {
           type: Sequelize.INTEGER,
           references: {
-            model: 'Users',
+            model: 'attendanceGroups',
             key: 'id',
           },
-          onUpdate: 'CASCADE',
           onDelete: 'CASCADE',
         });
       });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('attendances').then(() => {
-      return queryInterface.removeColumn('attendances', 'UserId');
-    });
+    await queryInterface.dropTable('groupSettings');
   },
 };
+
