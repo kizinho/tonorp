@@ -12,11 +12,11 @@ module.exports = {
       },
       userGroupsId: {
         type: Sequelize.INTEGER,
-        primaryKey: true,
         references: {
           model: 'attendanceGroups',
           key: 'id',
         },
+        onDelete: 'CASCADE',
       },
       createdAt: {
         allowNull: false,
@@ -32,4 +32,3 @@ module.exports = {
     await queryInterface.dropTable('messages');
   },
 };
-

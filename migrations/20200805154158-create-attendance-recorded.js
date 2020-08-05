@@ -14,6 +14,7 @@ module.exports = {
           model: 'attendances',
           key: 'id',
         },
+        onDelete: 'CASCADE',
       },
       UserId: {
         type: Sequelize.INTEGER,
@@ -37,4 +38,3 @@ module.exports = {
     await queryInterface.dropTable('attendanceRecordeds');
   },
 };
-
