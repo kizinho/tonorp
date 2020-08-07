@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       this.belongsToMany(models.attendanceGroups, { through: 'userGroup' });
       this.hasOne(models.attendanceGroups, { as: 'owner' });
+      this.hasMany(models.message);
     }
   }
   User.init(
@@ -18,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       firstName: DataTypes.STRING,
       lastName: DataTypes.STRING,
       email: DataTypes.STRING,
+      username: DataTypes.STRING,
       password: DataTypes.STRING,
     },
     {

@@ -1,6 +1,6 @@
-import { Model } from 'sequelize';
+const { Model } = require('sequelize');
 
-export default (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   class attendanceGroups extends Model {
     /**
      * Helper method for defining associations.
@@ -11,8 +11,8 @@ export default (sequelize, DataTypes) => {
       // define association here
       this.belongsToMany(models.User, { through: 'userGroup' });
       this.belongsTo(models.User, { as: 'owner' });
-      this.hasMany(models.messages);
-      this.hasOne(models.attendance);
+      this.hasMany(models.message);
+      this.hasMany(models.meeting);
       this.hasOne(models.groupSetting);
     }
   }
