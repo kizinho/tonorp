@@ -1,16 +1,14 @@
+'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('messages', {
+    await queryInterface.createTable('meetings', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      message: {
-        type: Sequelize.TEXT,
-      },
-      userGroupsId: {
+      attendanceGroupsId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'attendanceGroups',
@@ -18,14 +16,8 @@ module.exports = {
         },
         onDelete: 'CASCADE',
       },
-
-      userId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Users',
-          key: 'id',
-        },
-        onDelete: 'CASCADE',
+      type: {
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
@@ -38,6 +30,7 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('messages');
+    await queryInterface.dropTable('meetings');
   },
 };
+

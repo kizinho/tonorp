@@ -1,6 +1,6 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.addColumn('attendanceGroups', 'UserId', {
+    return queryInterface.addColumn('attendanceGroups', 'owner', {
       type: Sequelize.INTEGER,
       references: {
         model: 'Users',
