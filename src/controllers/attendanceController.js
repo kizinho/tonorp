@@ -1,5 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 
-exports.userAttendances = (user_id) => {
+const userAttendances = (user_id) => {
   return 'user attendance';
 };
+
+module.exports = userAttendances;
