@@ -1,3 +1,4 @@
+process.env.NODE_ENV = 'test';
 const { expect } = require('chai');
 
 const ValidateUser = require('../../src/modules/utils/ValidateUser');

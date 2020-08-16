@@ -30,6 +30,8 @@
     "eslint-plugin-import": "^2.22.0",
     "mocha": "^8.0.1",
     "nock": "^13.0.3",
+    "sequelize-test-helpers": "^1.2.3",
+    "sinon": "^9.0.3",
     "typescript": "^3.9.7"
   },
   "prettier": {
