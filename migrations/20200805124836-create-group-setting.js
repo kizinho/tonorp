@@ -10,7 +10,7 @@ module.exports = {
       chatLocked: {
         type: Sequelize.BOOLEAN,
       },
-      attendanceGroupsId: {
+      attendanceGroupId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'attendanceGroups',
