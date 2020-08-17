@@ -2,12 +2,12 @@ const {
     meeting
 } = require('../../models/index')
 
-const userMeeting = async (attendanceGroupId, type) => {
-    if (!attendanceGroupId || !type || typeof attendanceGroupId !== 'number' || typeof type !== 'string') {
+const userMeeting = async (attendanceGroupsId, type) => {
+    if (!attendanceGroupsId || !type || typeof attendanceGroupsId !== 'number' || typeof type !== 'string') {
         throw new Error('Attendance group and type can not be null');
     }
     const groupMeeting = await meeting.create({
-        attendanceGroupId,
+        attendanceGroupsId,
         type
     })
     return groupMeeting

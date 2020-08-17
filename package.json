@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --recursive",
-    "testsuite": "mocha --recursive tests/"
+    "testfile": "mocha test/controllers/testMeetingController.js"
   },
   "author": "iNSPARK Enterprise",
   "license": "ISC",
