@@ -19,47 +19,50 @@ const data = {
 };
 
 describe('Test Meeting controllers', () => {
-            let userId;
-            let attendGroupId;
-            before(async () => {
-                const testUser = await User.create(data);
-                userId = testUser.id;
+    let userId;
+    let attendGroupId;
+    before(async () => {
+        const testUser = await User.create(data);
+        userId = testUser.id;
 
-                const testAttendGroup = await attendanceGroups.create({ name: 'workshop', ownerId: userId })
-                attendGroupId = testAttendGroup.id;
-                return testUser;
+        const testAttendGroup = await attendanceGroups.create({
+            name: 'workshop',
+            ownerId: userId
+        })
+        attendGroupId = testAttendGroup.id;
+        return testUser;
+    });
+    after((done) => {
+        attendanceGroups
+            .destroy({
+                truncate: {
+                    cascade: true,
+                    restartIdentity: true
+                }
+            })
+            .then(() => {
+                User.destroy({
+                    truncate: {
+                        cascade: true,
+                        restartIdentity: true
+                    },
+                })
+            }).then(() => {
+                addMeeting
+                    .destroy({
+                        truncate: {
+                            cascade: true,
+                            restartIdentity: true
+                        },
+                    })
+                    .then(() => done());
+            }).catch(() => {
+                done();
             });
-           after((done) => {
-               attendanceGroups
-                   .destroy({
-                       truncate: {
-                           cascade: true,
-                           restartIdentity: true
-                       }
-                   })
-                   .then(() => {
-                       User.destroy({
-                           truncate: {
-                               cascade: true,
-                               restartIdentity: true
-                           },
-                       })
-                   }).then(() => {
-                       addMeeting
-                           .destroy({
-                               truncate: {
-                                   cascade: true,
-                                   restartIdentity: true
-                               },
-                           })
-                           .then(() => done());
-                   }).catch(() => {
-                       done();
-                   });
-           });
-                it('should test that meeting is created', async () => {
-                    const meeting = await addMeeting(attendGroupId, 'physical');
-                    expect(typeof meeting.id).to.equal('number');
-                });
+    });
+    it('should test that meeting is created', async () => {
+        const meeting = await addMeeting(attendGroupId, 'physical');
+        expect(typeof meeting.id).to.equal('number');
+    });
 
-            });
+});
