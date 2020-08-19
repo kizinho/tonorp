@@ -7,12 +7,6 @@ const addGroup = async (userId, name, groupmodel = attendanceGroups) => {
     throw TypeError('Invalid user id');
   }
 
-  // Check that user with the id exists in the database
-  const user = await User.findByPk(userId);
-  if (user === null) {
-    throw new Error('User does not Exist');
-  }
-
   const addGroupSetting = async (group) => {
     try {
       await group.createGroupSetting();
@@ -38,4 +32,11 @@ const addGroup = async (userId, name, groupmodel = attendanceGroups) => {
   return creategroup();
 };
 
-module.exports = { addGroup };
+const addUserToGroup = async (userId, groupId) => {
+  const user = await User.findByPk(userId);
+  const group = await attendanceGroups.findByPk(groupId);
+  const userAdded = await group.addUser(user);
+  return userAdded;
+};
+
+module.exports = { addGroup, addUserToGroup };

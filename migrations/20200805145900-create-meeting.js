@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      attendanceGroupsId: {
+      attendanceGroupId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'attendanceGroups',
@@ -33,4 +33,3 @@ module.exports = {
     await queryInterface.dropTable('meetings');
   },
 };
-

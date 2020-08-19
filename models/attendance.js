@@ -9,12 +9,12 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.belongsTo(models.meeting);
-      this.hasOne(models.attendanceRecorded);
+      this.hasMany(models.attendanceRecorded);
     }
   }
   attendance.init(
     {
-      attendanceGroupsId: DataTypes.INTEGER,
+      meetingId: DataTypes.INTEGER,
     },
     {
       sequelize,

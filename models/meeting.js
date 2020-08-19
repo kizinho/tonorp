@@ -9,11 +9,12 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.belongsTo(models.attendanceGroups);
+      this.hasOne(models.attendance);
     }
   }
   meeting.init(
     {
-      attendanceGroupsId: DataTypes.INTEGER,
+      attendanceGroupId: DataTypes.INTEGER,
       type: DataTypes.STRING,
     },
     {
@@ -23,4 +24,3 @@ module.exports = (sequelize, DataTypes) => {
   );
   return meeting;
 };
-
