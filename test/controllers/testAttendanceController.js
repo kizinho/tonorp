@@ -3,12 +3,17 @@ process.env.NODE_ENV = 'test';
 const { expect } = require('chai');
 
 // application modules
-const attendanceController = require('../../src/controllers/attendance.js');
+const {
+  userAttendances,
+  createAttendance,
+} = require('../../src/controllers/attendance.js');
 
 describe('Test Attendace controllers', () => {
   context('Test user attendance groups', () => {
     it('should return user groups', () => {
-      expect(typeof attendanceController()).to.equal('string');
+      expect(typeof userAttendances()).to.equal('string');
     });
   });
 });
+
+describe('Test that attendance is created', function () {});
