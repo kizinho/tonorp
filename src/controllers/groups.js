@@ -1,4 +1,6 @@
 const { attendanceGroups, User } = require('../../models/index');
+const { UserExists } = require('../modules/utils/user');
+const { groupExists } = require('../modules/utils/groups');
 
 const addGroup = async (userId, name, groupmodel = attendanceGroups) => {
   if (!name || name === '' || typeof name !== 'string') {
@@ -38,4 +40,17 @@ const addGroup = async (userId, name, groupmodel = attendanceGroups) => {
   return creategroup();
 };
 
-module.exports = { addGroup };
+const addUserToGroup = async (userId, groupId) => {
+  if (!(await UserExists(userId))) {
+    throw new Error('User does not exist');
+  }
+  if (!(await groupExists(groupId))) {
+    throw new Error('Group does not exist');
+  }
+  const user = await User.findByPk(userId);
+  const group = await attendanceGroups.findByPk(groupId);
+  const userAdded = await group.addUser(user);
+  return userAdded;
+};
+
+module.exports = { addGroup, addUserToGroup };

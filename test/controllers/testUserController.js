@@ -9,7 +9,7 @@ describe('Add user to the database', function () {
     firstName: 'Melody',
     lastName: 'Daniel',
     username: 'melodyogonna',
-    email: 'meodkdkdk@jjj.j',
+    email: 'meodkdkdk@jjj.jk',
     password: 'kskskkkskks',
   };
 
@@ -18,7 +18,6 @@ describe('Add user to the database', function () {
   });
   it('Create a new user', async function () {
     const adduser = await addUser(data);
-    console.log(addUser);
     expect(typeof adduser.id).to.equal('number');
   });
 });

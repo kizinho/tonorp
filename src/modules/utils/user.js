@@ -1,7 +1,11 @@
-const isValidDetails = (userDetails) => {
-  if (!userDetails) {
+const { User } = require('../../../models/index');
+
+const UserExists = async (userId) => {
+  const user = await User.findByPk(userId);
+  if (user === null) {
     return false;
   }
-
-  const { firstName, lastName, username, email, phone, password } = userDetails;
+  return true;
 };
+
+module.exports = { UserExists };
