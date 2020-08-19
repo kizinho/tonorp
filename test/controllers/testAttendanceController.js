@@ -16,4 +16,9 @@ describe('Test Attendace controllers', () => {
   });
 });
 
-describe('Test that attendance is created', function () {});
+describe('Test that attendance is created', function () {
+  it('Should create a new attendance', async function () {
+    const attendance = await createAttendance(1);
+    expect(typeof attendance.id).to.equal('number');
+  });
+});

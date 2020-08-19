@@ -8,10 +8,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      meetingId: {
+      attendanceGroupId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'meetings',
+          model: 'attendanceGroups',
           key: 'id',
         },
         onDelete: 'CASCADE',
