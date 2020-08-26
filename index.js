@@ -1,9 +1,13 @@
 require('dotenv').config();
+const http = require('http');
+
 const app = require('./src/main');
+const localSocketIo = require('./src/socketio');
 
-const port = process.env.PORT || 5000;
-app.set('port', port);
+const port = process.env.PORT || 4000;
+const server = http.createServer(app);
+localSocketIo.listen(server);
 
-app.listen(app.get(port), () => {
-  console.log('serving app');
+server.listen(port, () => {
+  console.log(`serving app on port ${port}`);
 });
