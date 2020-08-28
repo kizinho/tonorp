@@ -1,10 +1,10 @@
 const router = require('express').Router();
 
 // Application modules
-const attendanceController = require('../controllers/attendance');
+const { userAttendances } = require('../controllers/attendance');
 
 router.get('/user-groups/:userId', (req, res) => {
-  const user_groups = attendanceController(req.params.userID);
+  const user_groups = userAttendances(req.params.userID);
   res.send('user attendance');
 });
 

@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   meeting.init(
     {
-      attendanceGroupsId: DataTypes.INTEGER,
+      attendanceGroupId: DataTypes.INTEGER,
       type: DataTypes.STRING,
     },
     {
