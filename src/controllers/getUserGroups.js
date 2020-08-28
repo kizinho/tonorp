@@ -2,12 +2,12 @@ const { attendanceGroups } = require('../../models/index')
 
 const userGroups = async (userId) => {
     if (!userId || typeof userId !== 'number') {
-        throw new Error('User is required ');
+    throw new Error('User is required ');
     }
 
     const userGroupList = await attendanceGroups.findAll({
         where: {
-            owerId: userId
+            ownerId: userId
         }
     })
     return userGroupList
