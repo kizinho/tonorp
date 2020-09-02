@@ -3,7 +3,11 @@ process.env.NODE_ENV = 'test';
 const { expect } = require('chai');
 
 const { User, attendanceGroups, groupSetting } = require('../../models/index');
-const { addGroup, addUserToGroup } = require('../../src/controllers/groups');
+const {
+  addGroup,
+  addUserToGroup,
+  usersInGroup,
+} = require('../../src/controllers/groups');
 
 // dummy information
 const data = {
@@ -59,5 +63,9 @@ describe('Add users to group', function () {
   it('Test that user is successfully added to group', async () => {
     const added = await addUserToGroup(userId, groupId);
     expect(added).to.be.an('array');
+  });
+  it('Should return users in group', async () => {
+    const users = await usersInGroup(groupId);
+    expect(users).to.an('array');
   });
 });
