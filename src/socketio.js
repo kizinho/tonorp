@@ -1,12 +1,34 @@
 const io = require('socket.io')();
 
+const {
+  sendGroupMessage,
+  sendPersonalMessage,
+} = require('./controllers/socketIoChat');
+const { JoinUserToGroup } = require('./controllers/socketIoGroup');
+
+let userIds = 1;
+
 io.on('connection', (socket) => {
-  console.log('User connected');
+  socket.emit('user id', userIds);
+  socket.user_id = userIds;
+  userIds += 1;
 
   socket.emit('connectionSuccess', "You're connected");
 
   socket.on('group message', (message) => {
-    socket.broadcast.emit(message);
+    sendGroupMessage(socket, 'melody', message);
+  });
+
+  // Send personal message
+  socket.on('personal message', (message) => {
+    const { sockets } = io.sockets;
+    // message = JSON.parse(message);
+    Object.keys(sockets).forEach((socket_id) => {
+      const current_socket = sockets[socket_id];
+      if (current_socket.user_id === 3) {
+        return sendPersonalMessage(socket, socket_id, message);
+      }
+    });
   });
 
   socket.on('disconnect', () => {

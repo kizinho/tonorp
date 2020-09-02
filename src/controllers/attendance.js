@@ -16,13 +16,14 @@ const createAttendance = async (meeting_id) => {
   return new_attendance;
 };
 
-const recordAttendance = async (attendance_id, user_id) => {
+const recordAttendance = async (attendance_id, UserId, attendanceGroupId) => {
   const p_att = await attendance.findByPk(attendance_id);
   if (p_att === null) {
     throw new Error('Invalid attendance list');
   }
   const recorded_attendance = await p_att.createAttendanceRecorded({
-    UserId: user_id,
+    UserId,
+    attendanceGroupId,
   });
   return recorded_attendance;
 };
