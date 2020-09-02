@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --recursive",
-    "testsuite": "mocha  test/controllers/testUserController.js",
+    "testsuite": "mocha  test/controllers/testUserGroupController.js",
     "server": "node index",
     "dev": "nodemon index"
   },

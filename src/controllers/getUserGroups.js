@@ -1,8 +1,8 @@
-const { attendanceGroups } = require('../../models/index')
+const { attendanceGroups, attendanceRecorded } = require('../../models/index')
 
 const userGroups = async (userId) => {
     if (!userId || typeof userId !== 'number') {
-    throw new Error('User is required ');
+        throw new Error('User is required ');
     }
 
     const userGroupList = await attendanceGroups.findAll({
@@ -14,4 +14,16 @@ const userGroups = async (userId) => {
 
 }
 
-module.exports = { userGroups }
+const groupAttendanceCount = async (attendanceGroupId) => {
+    if (!attendanceGroupId || typeof attendanceGroupId !== 'number') {
+        throw new Error('GroupId is required ');
+    }
+    const groupCount = await attendanceRecorded.count({
+        where: {
+            attendanceGroupId
+        }
+    })
+    return groupCount
+}
+
+module.exports = { userGroups, groupAttendanceCount }
