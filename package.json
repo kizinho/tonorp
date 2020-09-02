@@ -5,10 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --recursive",
-    "testsuite": "mocha --recursive tests/",
+    "testsuite": "mocha  test/controllers/testUserController.js",
     "server": "node index",
-    "dev": "nodemon index",
-    "testsuite": "mocha  test/controllers/testUserController.js"
+    "dev": "nodemon index"
   },
   "author": "iNSPARK Enterprise",
   "license": "ISC",
