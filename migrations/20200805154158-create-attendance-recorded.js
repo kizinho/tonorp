@@ -16,6 +16,17 @@ module.exports = {
         },
         onDelete: 'CASCADE',
       },
+      attendanceGroupId: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        references: {
+          model: 'attendanceGroups',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      },
+
       UserId: {
         type: Sequelize.INTEGER,
         primaryKey: true,
