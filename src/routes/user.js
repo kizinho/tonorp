@@ -1,13 +1,25 @@
 // Third party modules
 require('dotenv');
-const { sequelize: db } = require('sequelize');
 const express = require('express');
 
 // Application modules
-const attendanceController = require('../../controllers/attendanceController');
+const userController = require('../controllers/users');
 
+// Initialize express router
 const router = express.Router();
 
-router.get('user/:userID', attendanceController.userAttendances);
+// Initialize middlewares
+router.use(express.json());
+
+// Define routes
+router.get('/:user_id', async (request, response) => {
+  const user = userController.returnUser(request.params.user_id);
+  return response.send(user);
+});
+
+router.post('/register', async (request, response) => {
+  const user = await userController.addUser(request.body);
+  response.send(user);
+});
 
 export default router;
