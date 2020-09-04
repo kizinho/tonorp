@@ -39,4 +39,10 @@ const addUserToGroup = async (userId, groupId) => {
   return userAdded;
 };
 
-module.exports = { addGroup, addUserToGroup };
+const usersInGroup = async (groupId) => {
+  const group = await attendanceGroups.findByPk(groupId);
+  const users = await group.getUsers();
+  return users;
+};
+
+module.exports = { addGroup, addUserToGroup, usersInGroup };
