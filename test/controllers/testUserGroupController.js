@@ -57,6 +57,7 @@ describe('Test Get User Group controllers', () => {
 describe('Test Count User  attendance recoreded Group controllers', () => {
     let userId;
     let attendanceGroupId;
+    let meetingId;
     before(async () => {
         const testUser = await User.create(data);
         userId = testUser.id;
@@ -71,14 +72,14 @@ describe('Test Count User  attendance recoreded Group controllers', () => {
             attendanceGroupId,
             type: 'visual'
         })
-        const meetingId = meetingAttendId.id
+        meetingId = meetingAttendId.id
         const attendId = await attendance.create({
             meetingId
         })
         const attendanceId = attendId.id
         await attendanceRecorded.create({
             attendanceId,
-            attendanceGroupId,
+            meetingId,
             UserId: userId
         })
         return testUser;
@@ -129,7 +130,7 @@ describe('Test Count User  attendance recoreded Group controllers', () => {
             });
     });
     it('Test count of user attendance recoreded', async () => {
-        const countAttendGround = await groupAttendanceCount(attendanceGroupId);
+        const countAttendGround = await groupAttendanceCount(meetingId);
         expect(typeof countAttendGround).to.equal('number');
     });
 

@@ -14,13 +14,13 @@ const userGroups = async (userId) => {
 
 }
 
-const groupAttendanceCount = async (attendanceGroupId) => {
-    if (!attendanceGroupId || typeof attendanceGroupId !== 'number') {
+const groupAttendanceCount = async (meetingId) => {
+    if (!meetingId || typeof meetingId !== 'number') {
         throw new Error('GroupId is required ');
     }
     const groupCount = await attendanceRecorded.count({
         where: {
-            attendanceGroupId
+            meetingId
         }
     })
     return groupCount
