@@ -3,7 +3,7 @@ process.env.NODE_ENV = 'test';
 const { expect } = require('chai');
 
 const { User, attendanceGroups, meeting } = require('../../models/index');
-const { userMeeting } = require('../../src/controllers/meeting');
+const { userMeeting, classesHeld } = require('../../src/controllers/meeting');
 
 const data = {
   firstName: 'Kizito',
@@ -58,8 +58,13 @@ describe('Test Meeting controllers', () => {
       });
   });
   it('should test that meeting is created', async () => {
-    const meeting = await userMeeting(attendGroupId, 'physical');
-    expect(typeof meeting.id).to.equal('number');
+    const newMeeting = await userMeeting(attendGroupId, 'physical');
+    expect(typeof newMeeting.id).to.equal('number');
+  });
+
+  it('Should return meetings in a group', async () => {
+    const classes = await classesHeld(attendGroupId);
+    expect(classes).to.be.an('array');
+    expect(classes.length).to.equal(1);
   });
 });
-
