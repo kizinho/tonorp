@@ -12,7 +12,6 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsToMany(models.User, { through: 'userGroup' });
       this.belongsTo(models.User, { as: 'owner' });
       this.hasMany(models.message);
-      this.hasMany(models.attendanceRecorded);
       this.hasMany(models.meeting);
       this.hasOne(models.groupSetting);
     }
