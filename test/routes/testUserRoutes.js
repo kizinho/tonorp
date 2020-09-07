@@ -10,12 +10,23 @@ const app = require('../../src/main');
 
 chai.use(chai_http);
 
+// dummy information
+const data = {
+  firstName: 'Melody',
+  lastName: 'Daniel',
+  username: 'melodyogonna',
+  email: 'meodkdkdk@jjj.j',
+  password: 'kskskkkskks',
+};
+
 describe('Test user management', () => {
   context('Add users', () => {
     it('Add user', function (done) {
       chai
         .request(app)
         .post('/api/v1/users/register')
+        .send(data)
+        .type('json')
         .end((err, res) => {
           expect(res).to.have.status(200);
           done();
