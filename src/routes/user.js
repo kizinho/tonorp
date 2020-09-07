@@ -19,7 +19,7 @@ router.get('/:user_id', async (request, response) => {
 
 router.post('/register', async (request, response) => {
   const user = await userController.addUser(request.body);
-  response.send(user);
+  return response.send(user);
 });
 
-export default router;
+module.exports = router;
