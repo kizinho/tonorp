@@ -37,7 +37,7 @@ const returnUser = async (user_id) => {
     );
   }
 
-  const user = await model.user.findByPk(user_id);
+  const user = await model.User.findByPk(user_id);
   return user;
 };
 module.exports = { addUser, returnUser };

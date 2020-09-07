@@ -13,7 +13,7 @@ router.use(express.json());
 
 // Define routes
 router.get('/:user_id', async (request, response) => {
-  const user = userController.returnUser(request.params.user_id);
+  const user = await userController.returnUser(request.params.user_id);
   return response.send(user);
 });
 
