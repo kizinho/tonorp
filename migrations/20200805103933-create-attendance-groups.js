@@ -1,4 +1,3 @@
-'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('attendanceGroups', {
@@ -12,8 +11,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
       groupId: {
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4,
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
