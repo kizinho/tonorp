@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       this.belongsTo(models.attendanceGroups);
       this.hasOne(models.attendance);
+      this.hasMany(models.attendanceRecorded);
     }
   }
   meeting.init(
