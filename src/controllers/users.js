@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+const argon2 = require('argon2');
 const model = require('../../models/index');
 const Validate = require('../modules/utils/ValidateUser');
 const { hash } = require('../modules/utils/hashPassword');
@@ -31,12 +32,12 @@ const addUser = async (userDetails, user = model.User) => {
 
 const returnUser = async (user_id) => {
   if (!user_id || typeof user_id !== 'number') {
-    throw TypeError(
+    throw new TypeError(
       `Invalid user Id type, expected number, got ${typeof user_id}}`
     );
   }
 
-  const user = await model.user.findByPk(user_id);
+  const user = await model.User.findByPk(user_id);
   return user;
 };
 module.exports = { addUser, returnUser };
