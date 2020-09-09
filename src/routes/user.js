@@ -6,7 +6,6 @@ const express = require('express');
 // Application modules
 const userController = require('../controllers/users');
 const getUserGroupController = require('../controllers/getUserGroups');
-const { requests } = require('sinon');
 
 // Initialize express router
 const router = express.Router();
