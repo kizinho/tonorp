@@ -32,7 +32,7 @@ const addUser = async (userDetails, user = model.User) => {
 
 const returnUser = async (user_id) => {
   if (!user_id || typeof user_id !== 'number') {
-    throw TypeError(
+    throw new TypeError(
       `Invalid user Id type, expected number, got ${typeof user_id}}`
     );
   }
