@@ -13,7 +13,13 @@ router.use(express.json());
 
 // Define routes
 router.get('/:user_id', async (request, response) => {
-  const user = userController.returnUser(request.params.user_id);
+  const { user_id } = request.params;
+
+  if (typeof parseInt(user_id, 10) !== 'number') {
+    response.status(400).json({ error: 'Invalid user id type' });
+  }
+
+  const user = userController.returnUser(parseInt(user_id));
   return response.send(user);
 });
 
