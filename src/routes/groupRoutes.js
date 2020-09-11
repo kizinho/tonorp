@@ -5,6 +5,7 @@ const router = express.Router();
 // Application modules
 const { userGroups } = require('../controllers/getUserGroups');
 const { addGroup } = require('../controllers/groups');
+const { userMeeting } = require('../controllers/meeting');
 
 // Initialize middlewares
 router.use(express.json());
@@ -33,6 +34,14 @@ router.post('/create', async (request, response) => {
   }
 });
 
-router.post('/meeting', async (request, response) => {});
+router.post('/meeting', async (request, response) => {
+  const { attendanceGroupId, type } = request.body;
+  try {
+    const meeting = await userMeeting(attendanceGroupId, type);
+    return response.send(meeting);
+  } catch (error) {
+    return response.status(400).json({ error: error.message });
+  }
+});
 
 module.exports = router;
