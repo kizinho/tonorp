@@ -2,7 +2,7 @@ process.env.NODE_ENV = 'test';
 const { expect } = require('chai');
 const { User } = require('../../models/index');
 
-const { addUser } = require('../../src/controllers/users');
+const { addUser, userLogin } = require('../../src/controllers/users');
 
 describe('Add user to the database', function () {
   const data = {
