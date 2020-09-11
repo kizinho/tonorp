@@ -39,6 +39,8 @@ describe('Create attendance groups', function () {
   it('Test that group and groupSetting is created successfully', async () => {
     const group = await addGroup(userId, 'adminsNGS');
     expect(typeof group.id).to.equal('number');
+    console.log(group.groupId);
+    expect(group.groupId.length).to.equal(10);
   });
 });
 

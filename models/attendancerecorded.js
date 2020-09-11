@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       this.belongsTo(models.User);
       this.belongsTo(models.attendance);
-      this.belongsTo(models.attendanceGroups);
+      this.belongsTo(models.meeting);
     }
   }
   attendanceRecorded.init(
