@@ -16,7 +16,7 @@ describe('test attendance route', () => {
         .request(app)
         .get('/api/v1/groups/user-groups/1')
         .end((err, res) => {
-          expect(res).to.have.status(200);
+          expect(res).to.not.have.status(404);
           done();
         });
     });
