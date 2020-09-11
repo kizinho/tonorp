@@ -40,4 +40,21 @@ const returnUser = async (user_id) => {
   const user = await model.User.findByPk(user_id);
   return user;
 };
-module.exports = { addUser, returnUser };
+
+// login user
+const userLogin = async (email, password) => {
+  const userData = await model.User.findOne({
+    where: { email }
+  });
+  if (!userData) {
+    throw new Error('Email does not exist');
+  }
+  if (await argon2.verify(userData.password, password)) {
+    return userData
+  }
+  throw new Error('Invalid password');
+
+
+}
+
+module.exports = { addUser, userLogin, returnUser };
