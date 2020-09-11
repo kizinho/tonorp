@@ -1,16 +1,15 @@
 /* eslint-disable camelcase */
 // Third party modules
 require('dotenv');
+const { sequelize: db } = require('sequelize');
 const express = require('express');
 
 // Application modules
-const userController = require('../controllers/users');
+const attendanceController = require('../../controllers/attendanceController');
 
-// Initialize express router
 const router = express.Router();
 
-// Initialize middlewares
-router.use(express.json());
+router.get('user/:userID', attendanceController.userAttendances);
 
 // Define routes
 router.get('/:user_id', async (request, response) => {
@@ -25,13 +24,12 @@ router.get('/:user_id', async (request, response) => {
 });
 
 router.post('/register', async (request, response) => {
-  try{
-  const user = await userController.addUser(request.body);
-  return response.send(user);
+  try {
+    const user = await userController.addUser(request.body);
+    return response.send(user);
   } catch (error) {
-    return response.status(400).json({ error: error.message })
+    return response.status(400).json({ error: error.message });
   }
 });
-
 
 module.exports = router;
