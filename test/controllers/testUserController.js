@@ -28,15 +28,23 @@ describe('Test user login', () => {
 
   // dummy information
   const data = {
-    firstName: 'Adike',
+    firstName: 'Adiketest',
     lastName: 'Kizito',
     username: 'Maduabuchi',
     email: 'meodkdkdk@jjj.jk',
     password: 'kskskkkskks',
   };
+  before(async () => {
+    const testUser = await addUser(data);
+    return testUser;
+
+  });
+  after(async () => {
+    await User.destroy({ truncate: { cascade: true, restartIdentity: true } });
+  });
   it('Test user login successfully logged', async () => {
-    const login = await userLogin(data.email, data.password);
-    expect(typeof login.id).to.equal('number');
+    const loginUser = await userLogin('meodkdkdk@jjj.jk', 'kskskkkskks');
+    expect(typeof loginUser.id).to.equal('number');
   });
 
   // it('Test user invaild email', () => {
