@@ -58,8 +58,8 @@ describe('Test Meeting controllers', () => {
       });
   });
   it('should test that meeting is created', async () => {
-    const meeting = await userMeeting(attendGroupId, 'physical');
-    expect(typeof meeting.id).to.equal('number');
+    const meetings = await userMeeting(attendGroupId, 'physical');
+    expect(typeof meetings.id).to.equal('number');
   });
 });
 
