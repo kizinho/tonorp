@@ -32,7 +32,6 @@ describe('Test that attendance is created', function () {
   let meeting_id;
   let att_id;
   let user_id;
-  let group_id;
   before(async () => {
     const data = {
       firstName: 'Melody',
@@ -43,7 +42,6 @@ describe('Test that attendance is created', function () {
     };
     const user = await User.create(data);
     const group = await addGroup(user.id, 'testgroup');
-    group_id = group.id;
     const test_meeting = await userMeeting(group.id, 'virtual');
     meeting_id = test_meeting.id;
     user_id = user.id;
@@ -71,8 +69,9 @@ describe('Test that attendance is created', function () {
     expect(typeof new_attendance.id).to.equal('number');
   });
   it('Tests if attendance is recorded', async function () {
-    const re_att = await recordAttendance(att_id, user_id, group_id);
+    console.log(meeting_id);
+    const re_att = await recordAttendance(att_id, user_id, meeting_id);
     expect(typeof re_att.id).to.equal('number');
-    expect(typeof re_att.attendanceGroupId).to.equal('number');
+    expect(typeof re_att.meetingId).to.equal('number');
   });
 });

@@ -1,3 +1,5 @@
+const { generateRandomString } = require('../src/modules/utils/helper');
+
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
@@ -12,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsToMany(models.User, { through: 'userGroup' });
       this.belongsTo(models.User, { as: 'owner' });
       this.hasMany(models.message);
-      this.hasMany(models.attendanceRecorded);
       this.hasMany(models.meeting);
       this.hasOne(models.groupSetting);
     }
@@ -21,8 +22,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       name: DataTypes.STRING,
       groupId: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+        type: DataTypes.STRING,
+        defaultValue: generateRandomString(10),
         allowNull: false,
       },
     },

@@ -22,10 +22,7 @@ describe('Add user to the database', function () {
   });
 });
 
-
-
 describe('Test user login', () => {
-
   // dummy information
   const data = {
     firstName: 'Adiketest',
@@ -37,7 +34,6 @@ describe('Test user login', () => {
   before(async () => {
     const testUser = await addUser(data);
     return testUser;
-
   });
   after(async () => {
     await User.destroy({ truncate: { cascade: true, restartIdentity: true } });
@@ -52,7 +48,4 @@ describe('Test user login', () => {
   //   // eslint-disable-next-line no-return-await
   //   expect(async () => await login('adikekizi@gmail.com', '1233445')).to.throw();
   // });
-
 });
-
-
