@@ -10,6 +10,17 @@ module.exports = {
       chatLocked: {
         type: Sequelize.BOOLEAN,
       },
+      latitude:{
+        type: Sequelize.STRING,
+        allowNull:true
+      },
+      longtitude:{
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      goeFence: {
+        type: Sequelize.BOOLEAN
+      },
       attendanceGroupId: {
         type: Sequelize.INTEGER,
         references: {
