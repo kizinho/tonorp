@@ -1,29 +1,25 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('attendances', {
+    await queryInterface.createTable('attendanceRolls', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      meetingId: {
+      attendanceGroupId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'meetings',
+          model: 'attendanceGroups',
           key: 'id',
         },
         onDelete: 'CASCADE',
-        allowNull: true,
       },
-      attendanceRollId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'attendanceRolls',
-          key: 'id',
-        },
-        onDelete: 'CASCADE',
-        allowNull: true,
+      start: {
+        type: Sequelize.DATE,
+      },
+      end: {
+        type: Sequelize.DATE,
       },
       createdAt: {
         allowNull: false,
@@ -36,6 +32,7 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('attendances');
+    await queryInterface.dropTable('attendanceRolls');
   },
 };
+
