@@ -1,4 +1,5 @@
 const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class attendance extends Model {
     /**
@@ -9,12 +10,14 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.belongsTo(models.meeting);
+      this.belongsTo(models.attendanceRoll);
       this.hasMany(models.attendanceRecorded);
     }
   }
   attendance.init(
     {
       meetingId: DataTypes.INTEGER,
+      attendanceRollId: DataTypes.INTEGER,
     },
     {
       sequelize,
