@@ -1,6 +1,7 @@
 const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
-  class groupSetting extends Model {
+  class attendanceRoll extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -9,32 +10,21 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.belongsTo(models.attendanceGroups);
+      this.hasOne(models.attendance);
+      this.hasMany(models.attendanceRecorded);
     }
   }
-  groupSetting.init(
+  attendanceRoll.init(
     {
-      chatLocked: DataTypes.BOOLEAN,
-      latitude: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      longtitude: {
-        type: DataTypes.STRING,
-        allowNull: true
-      },
-      goeFence: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: 0
-      },
+      attendanceGroupId: DataTypes.INTEGER,
+      start: DataTypes.DATE,
+      end: DataTypes.DATE,
     },
-
-    
-    
     {
       sequelize,
-      modelName: 'groupSetting',
+      modelName: 'attendanceRoll',
     }
   );
-  return groupSetting;
+  return attendanceRoll;
 };
 

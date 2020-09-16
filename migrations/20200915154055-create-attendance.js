@@ -1,33 +1,29 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('groupSettings', {
+    await queryInterface.createTable('attendances', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      chatLocked: {
-        type: Sequelize.BOOLEAN,
-      },
-      latitude:{
-        type: Sequelize.STRING,
-        allowNull:true
-      },
-      longtitude:{
-        type: Sequelize.STRING,
-        allowNull: true
-      },
-      goeFence: {
-        type: Sequelize.BOOLEAN
-      },
-      attendanceGroupId: {
+      meetingId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'attendanceGroups',
+          model: 'meetings',
           key: 'id',
         },
         onDelete: 'CASCADE',
+        allowNull: true,
+      },
+      attendanceRollId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'attendanceRolls',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,
@@ -40,6 +36,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('groupSettings');
+    await queryInterface.dropTable('attendances');
   },
 };

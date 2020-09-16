@@ -69,7 +69,6 @@ describe('Test that attendance is created', function () {
     expect(typeof new_attendance.id).to.equal('number');
   });
   it('Tests if attendance is recorded', async function () {
-    console.log(meeting_id);
     const re_att = await recordAttendance(att_id, user_id, meeting_id);
     expect(typeof re_att.id).to.equal('number');
     expect(typeof re_att.meetingId).to.equal('number');
