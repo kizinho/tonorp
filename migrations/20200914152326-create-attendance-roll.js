@@ -15,11 +15,16 @@ module.exports = {
         },
         onDelete: 'CASCADE',
       },
-      start: {
+      time: {
+        allowNull: false,
         type: Sequelize.DATE,
       },
+      start: {
+        allowNull: false,
+        type: Sequelize.DATEONLY,
+      },
       end: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
       },
       createdAt: {
         allowNull: false,
@@ -35,4 +40,3 @@ module.exports = {
     await queryInterface.dropTable('attendanceRolls');
   },
 };
-
