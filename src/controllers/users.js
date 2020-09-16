@@ -41,20 +41,23 @@ const returnUser = async (user_id) => {
   return user;
 };
 
-// login user
-const userLogin = async (email, password) => {
+/** Validates a user's login details
+ * @param {string} email - User's Email address
+ * @param {string} password - User's password
+ * Checks that a user with the email address exists in the database and
+ * That the passed in password matches the one already saved in the database
+ */
+const validateLogin = async (email, password) => {
   const userData = await model.User.findOne({
-    where: { email }
+    where: { email },
   });
   if (!userData) {
     throw new Error('Email does not exist');
   }
   if (await argon2.verify(userData.password, password)) {
-    return userData
+    return userData;
   }
   throw new Error('Invalid password');
+};
 
-
-}
-
-module.exports = { addUser, userLogin, returnUser };
+module.exports = { addUser, validateLogin, returnUser };

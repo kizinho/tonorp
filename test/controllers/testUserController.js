@@ -2,7 +2,7 @@ process.env.NODE_ENV = 'test';
 const { expect } = require('chai');
 const { User } = require('../../models/index');
 
-const { addUser, userLogin } = require('../../src/controllers/users');
+const { addUser, validateLogin } = require('../../src/controllers/users');
 
 describe('Add user to the database', function () {
   const data = {
@@ -39,7 +39,7 @@ describe('Test user login', () => {
     await User.destroy({ truncate: { cascade: true, restartIdentity: true } });
   });
   it('Test user login successfully logged', async () => {
-    const loginUser = await userLogin('meodkdkdk@jjj.jk', 'kskskkkskks');
+    const loginUser = await validateLogin('meodkdkdk@jjj.jk', 'kskskkkskks');
     expect(typeof loginUser.id).to.equal('number');
   });
 
