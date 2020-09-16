@@ -14,7 +14,22 @@ module.exports = (sequelize, DataTypes) => {
   groupSetting.init(
     {
       chatLocked: DataTypes.BOOLEAN,
+      latitude: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      longtitude: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
+      goeFence: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: 0
+      },
     },
+
+    
+    
     {
       sequelize,
       modelName: 'groupSetting',
