@@ -18,7 +18,6 @@ module.exports = {
       },
       meetingId: {
         type: Sequelize.INTEGER,
-        primaryKey: true,
         references: {
           model: 'meetings',
           key: 'id',
@@ -29,7 +28,6 @@ module.exports = {
       },
       attendanceRollId: {
         type: Sequelize.INTEGER,
-        primaryKey: true,
         references: {
           model: 'attendanceRolls',
           key: 'id',
@@ -40,7 +38,6 @@ module.exports = {
       },
       UserId: {
         type: Sequelize.INTEGER,
-        primaryKey: true,
         references: {
           model: 'Users',
           key: 'id',

@@ -12,11 +12,20 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.User);
       this.belongsTo(models.attendance);
       this.belongsTo(models.meeting);
+      this.belongsTo(models.attendanceRoll);
     }
   }
   attendanceRecorded.init(
     {
       attendanceId: DataTypes.INTEGER,
+      meetingId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      attendanceRollId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
       UserId: DataTypes.INTEGER,
     },
     {
