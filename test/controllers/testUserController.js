@@ -16,7 +16,7 @@ describe('Add user to the database', function () {
   after(async () => {
     await User.destroy({ truncate: { cascade: true, restartIdentity: true } });
   });
-  it('Create a new user', async function () {
+  it('Create a new user', async () => {
     const adduser = await addUser(data);
     expect(typeof adduser.id).to.equal('number');
   });

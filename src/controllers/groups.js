@@ -1,4 +1,5 @@
 const { attendanceGroups, User } = require('../../models/index');
+const { generateRandomString } = require('../modules/utils/helper');
 
 const addGroup = async (userId, name, groupmodel = attendanceGroups) => {
   if (!name || name === '' || typeof name !== 'string') {
@@ -19,14 +20,18 @@ const addGroup = async (userId, name, groupmodel = attendanceGroups) => {
   };
 
   const creategroup = () => {
+    const groupId = generateRandomString(7);
     return groupmodel
-      .create({ name, ownerId: userId })
+      .create({ name, ownerId: userId, groupId })
       .then((group) => {
         addGroupSetting(group);
         return group;
       })
       .catch((e) => {
-        console.log(e);
+        if (e.name === 'SequelizeUniqueConstraintError') {
+          return creategroup();
+        }
+        throw e;
       });
   };
   return creategroup();
