@@ -4,6 +4,7 @@ const { expect } = require('chai');
 
 const { User, attendanceGroups, meeting } = require('../../models/index');
 const { userMeeting } = require('../../src/controllers/meeting');
+const { generateRandomString } = require('../../src/modules/utils/helper');
 
 const data = {
   firstName: 'Kizito',
@@ -23,6 +24,7 @@ describe('Test Meeting controllers', () => {
     const testAttendGroup = await attendanceGroups.create({
       name: 'workshop',
       ownerId: userId,
+      groupId: generateRandomString(7),
     });
     attendGroupId = testAttendGroup.id;
     return testUser;
@@ -62,4 +64,3 @@ describe('Test Meeting controllers', () => {
     expect(typeof meetings.id).to.equal('number');
   });
 });
-
