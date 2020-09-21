@@ -5,6 +5,7 @@ const router = require('express').Router();
 
 // Application modules
 const { validateLogin } = require('../controllers/users');
+const { generateRandomString } = require('../modules/utils/helper');
 
 // initialize middlewares
 router.use(express.json());
@@ -20,7 +21,8 @@ router.post('/login', async (req, res) => {
     /* handle error */
     return res.status(401).json({ error: true, message: e.message });
   }
-  const token = jwt.sign({ data: user.id }, process.env.SECRET_KEY);
+  const randomString = generateRandomString(3);
+  const token = jwt.sign({ id: user.id, randomString }, process.env.SECRET_KEY);
 
   return res
     .status(200)

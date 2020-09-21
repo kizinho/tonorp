@@ -2,6 +2,7 @@ process.env.NODE_ENV = 'test';
 
 const { expect } = require('chai');
 
+const { generateRandomString } = require('../../src/modules/utils/helper');
 const {
   User,
   attendanceGroups,
@@ -31,6 +32,7 @@ describe('Test Get User Group controllers', () => {
     await attendanceGroups.create({
       name: 'workshop',
       ownerId: userId,
+      groupId: generateRandomString(7),
     });
     return testUser;
   });
@@ -73,6 +75,7 @@ describe('Test Count User  attendance recoreded Group controllers', () => {
     const attendGroup = await attendanceGroups.create({
       name: 'workshop',
       ownerId: userId,
+      groupId: generateRandomString(7),
     });
 
     attendanceGroupId = attendGroup.id;
@@ -143,4 +146,3 @@ describe('Test Count User  attendance recoreded Group controllers', () => {
     expect(typeof countAttendGround).to.equal('number');
   });
 });
-
