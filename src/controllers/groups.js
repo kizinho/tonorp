@@ -1,4 +1,4 @@
-const { attendanceGroups, User } = require('../../models/index');
+const { attendanceGroups, User, attendanceRolls } = require('../../models/index');
 
 const addGroup = async (userId, name, groupmodel = attendanceGroups) => {
   if (!name || name === '' || typeof name !== 'string') {
@@ -45,4 +45,16 @@ const usersInGroup = async (groupId) => {
   return users;
 };
 
-module.exports = { addGroup, addUserToGroup, usersInGroup };
+const createAttendanceROll = async (attendanceGroupId, start, end) => {
+  if (new Date(start) === 'Invalid Date' || new Date(end) === 'Invalid Date') {
+    throw TypeError('Invalid Date');
+  }
+  const create = await attendanceRolls.create({
+    attendanceGroupId,
+    start,
+    end
+  });
+  return create;
+};
+
+module.exports = { addGroup, addUserToGroup, usersInGroup, createAttendanceROll };
