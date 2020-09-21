@@ -1,5 +1,5 @@
 const { attendanceGroups, User, attendanceRoll } = require('../../models/index');
-const { generateRandomString } = require('../modules/utils/helper');
+const { generateRandomString, isValidDate } = require('../modules/utils/helper');
 
 const addGroup = async (userId, name, groupmodel = attendanceGroups) => {
   if (!name || name === '' || typeof name !== 'string') {
@@ -51,9 +51,10 @@ const usersInGroup = async (groupId) => {
 };
 
 const createAttendanceROll = async (attendanceGroupId, time,start, end) => {
-  console.log(new Date(start) === 'Invalid Date')
-  
-  if (new Date(start) === 'Invalid Date' || new Date(end) === 'Invalid Date' || new Date(time) === 'Invalid Date') {
+  const checkStart =  isValidDate(start);
+  const checkEnd = isValidDate(end);
+  const checkTime = isValidDate(time);
+  if (checkStart === false || checkEnd === false || checkTime === false) {
     throw TypeError('Invalid Date');
   }
   const createRoll = await attendanceRoll.create({

@@ -117,7 +117,7 @@ describe('Test group attendance roll controllers', () => {
       });
   });
   it('Test that attendance roll return an object', async () => {
-    const roll = await createAttendanceROll(attendanceGroupId, 'sss', 'sss', '2020-09-09 11:26:20');
+    const roll = await createAttendanceROll(attendanceGroupId, '2020-09-21 20:26:20', '2020-09-21 20:26:20', '2020-09-09 11:26:20');
     expect(roll).to.be.an('object');
   });
 });
