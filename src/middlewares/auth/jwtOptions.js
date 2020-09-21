@@ -2,8 +2,7 @@ const { ExtractJwt } = require('passport-jwt');
 
 const opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = 'secret';
-opts.issuer = 'accounts.examplesoft.com';
-opts.audience = 'yoursite.net';
+opts.secretOrKey = process.env.SECRET_KEY;
+opts.issuer = 'Tonorp Attendace';
 
 module.exports = opts;

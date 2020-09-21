@@ -7,6 +7,7 @@ const chai_http = require('chai-http');
 
 // application modules
 const app = require('../../src/main');
+const { User } = require('../../models/index');
 
 chai.use(chai_http);
 
@@ -20,6 +21,9 @@ const data = {
 };
 
 describe('Test user management', () => {
+  after(async () => {
+    await User.destroy({ truncate: { cascade: true, restartIdentity: true } });
+  });
   context('Add users', () => {
     it('Add user', function (done) {
       chai

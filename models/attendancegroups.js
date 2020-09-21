@@ -1,5 +1,3 @@
-const { generateRandomString } = require('../src/modules/utils/helper');
-
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
@@ -23,7 +21,6 @@ module.exports = (sequelize, DataTypes) => {
       name: DataTypes.STRING,
       groupId: {
         type: DataTypes.STRING,
-        defaultValue: generateRandomString(10),
         allowNull: false,
       },
     },
