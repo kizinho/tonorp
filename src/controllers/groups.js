@@ -50,12 +50,13 @@ const usersInGroup = async (groupId) => {
   return users;
 };
 
-const createAttendanceROll = async (attendanceGroupId, start, end) => {
-  if (new Date(start) === 'Invalid Date' || new Date(end) === 'Invalid Date') {
+const createAttendanceROll = async (attendanceGroupId, time,start, end) => {
+  if (new Date(start) === 'Invalid Date' || new Date(end) === 'Invalid Date' || new Date(time) === 'Invalid Date') {
     throw TypeError('Invalid Date');
   }
   const create = await attendanceRolls.create({
     attendanceGroupId,
+    time,
     start,
     end
   });
