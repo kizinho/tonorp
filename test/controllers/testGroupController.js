@@ -3,6 +3,8 @@ process.env.NODE_ENV = 'test';
 const { expect } = require('chai');
 
 const { User, attendanceGroups, groupSetting } = require('../../models/index');
+const { generateRandomString } = require('../../src/modules/utils/helper');
+
 const {
   addGroup,
   addUserToGroup,
