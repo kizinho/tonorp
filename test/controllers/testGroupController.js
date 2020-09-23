@@ -2,13 +2,14 @@ process.env.NODE_ENV = 'test';
 
 const { expect } = require('chai');
 
-const { User, attendanceGroups, groupSetting } = require('../../models/index');
+const { User, attendanceGroups, groupSetting, attendanceRoll } = require('../../models/index');
 const {
   addGroup,
   addUserToGroup,
   usersInGroup,
+  createAttendanceROll,
 } = require('../../src/controllers/groups');
-
+const { generateRandomString } = require('../../src/modules/utils/helper');
 // dummy information
 const data = {
   firstName: 'Melody',
@@ -67,5 +68,56 @@ describe('Add users to group', function () {
   it('Should return users in group', async () => {
     const users = await usersInGroup(groupId);
     expect(users).to.an('array');
+  });
+});
+
+describe('Test group attendance roll controllers', () => {
+  let attendanceGroupId;
+  before(async () => {
+    const testUser = await User.create(data);
+    userId = testUser.id;
+
+    const attendGroupId = await attendanceGroups.create({
+      name: 'workshop',
+      ownerId: userId,
+      groupId: generateRandomString(7),
+    });
+    attendanceGroupId = attendGroupId.id;
+
+    return testUser;
+  });
+  after((done) => {
+    attendanceGroups
+      .destroy({
+        truncate: {
+          cascade: true,
+          restartIdentity: true,
+        },
+      })
+      .then(() => {
+        attendanceRoll.destroy({
+          truncate: {
+            cascade: true,
+            restartIdentity: true,
+          },
+        });
+      })
+      .then(() => {
+        User.destroy({
+          truncate: {
+            cascade: true,
+            restartIdentity: true,
+          },
+        }).then(() => {
+          done();
+        });
+      })
+      .catch(() => {
+        done();
+      });
+  });
+  it('Test that attendance roll return an object', async () => {
+    const roll = await createAttendanceROll(attendanceGroupId, '2020-09-21 20:26:20', '2020-09-21 20:26:20', '2020-09-09 11:26:20');
+    expect(roll).to.be.an('object');
   });
 });
