@@ -2,7 +2,12 @@ process.env.NODE_ENV = 'test';
 
 const { expect } = require('chai');
 
-const { User, attendanceGroups, groupSetting, attendanceRoll } = require('../../models/index');
+const {
+  User,
+  attendanceGroups,
+  groupSetting,
+  attendanceRoll,
+} = require('../../models/index');
 const {
   addGroup,
   addUserToGroup,
@@ -117,7 +122,12 @@ describe('Test group attendance roll controllers', () => {
       });
   });
   it('Test that attendance roll return an object', async () => {
-    const roll = await createAttendanceROll(attendanceGroupId, '2020-09-21 20:26:20', '2020-09-21 20:26:20', '2020-09-09 11:26:20');
+    const roll = await createAttendanceROll(
+      attendanceGroupId,
+      '2020-09-21 20:26:20',
+      '2020-09-21 20:26:20',
+      '2020-09-09 11:26:20'
+    );
     expect(roll).to.be.an('object');
   });
 });

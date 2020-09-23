@@ -24,7 +24,7 @@ router.get('/user-groups/:userId', async (request, response) => {
   }
 });
 
-router.post('/create', async (request, response) => {
+router.post('/create-group', async (request, response) => {
   const { name, ownerId } = request.body;
   try {
     const group = await addGroup(ownerId, name);
@@ -34,7 +34,7 @@ router.post('/create', async (request, response) => {
   }
 });
 
-router.post('/meeting', async (request, response) => {
+router.post('/create-meeting', async (request, response) => {
   const { attendanceGroupId, type } = request.body;
   try {
     const meeting = await userMeeting(attendanceGroupId, type);
