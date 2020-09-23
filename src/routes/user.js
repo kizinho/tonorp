@@ -33,5 +33,4 @@ router.post('/register', async (request, response) => {
   }
 });
 
-
 module.exports = router;
