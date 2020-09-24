@@ -8,8 +8,9 @@ router.get(
   '/',
   passport.authenticate('jwt', { session: false }),
   async (req, res) => {
+    console.log(req.user);
     const attendances = await userAttendances(req.user.id);
-    return res.send(attendances);
+    return res.send(req.user);
   }
 );
 
