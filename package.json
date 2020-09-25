@@ -12,6 +12,7 @@
   "author": "iNSPARK Enterprise",
   "license": "ISC",
   "dependencies": {
+    "@googlemaps/google-maps-services-js": "^3.1.6",
     "argon2": "^0.26.2",
     "bull": "^3.18.0",
     "dotenv": "^8.2.0",
@@ -43,5 +44,8 @@
   "prettier": {
     "singleQuote": true,
     "semi": true
+  },
+  "engines": {
+    "node": "10.x"
   }
 }
