@@ -4,7 +4,7 @@ const router = express.Router();
 
 // Application modules
 const { userGroups } = require('../controllers/getUserGroups');
-const { addGroup } = require('../controllers/groups');
+const { addGroup, addUserToGroup, usersInGroup, createAttendanceROll } = require('../controllers/groups');
 const { userMeeting } = require('../controllers/meeting');
 
 // Initialize middlewares
@@ -42,6 +42,36 @@ router.post('/create-meeting', async (request, response) => {
   } catch (error) {
     return response.status(400).json({ error: error.message });
   }
+});
+router.post('/join-group', async (request, response) => {
+  const { userId, groupId } = request.body;
+  try {
+    const joinGroup = await addUserToGroup(userId, groupId);
+    return response.send(joinGroup);
+  } catch (error) {
+    return response.status(400).json({ error: error.message });
+  }
+
+});
+router.get('/user-in-groups', async (request, response) => {
+  const { groupId } = request.body;
+  try {
+    const useInGroup = await usersInGroup(groupId);
+    return response.send(useInGroup);
+  } catch (error) {
+    return response.status(400).json({ error: error.message });
+  }
+
+});
+router.post('/attendance-roll', async (request, response) => {
+  const { attendanceGroupId, time, start, end } = request.body;
+  try {
+    const rollAttendance = await createAttendanceROll(attendanceGroupId, time, start, end);
+    return response.send(rollAttendance);
+  } catch (error) {
+    return response.status(400).json({ error: error.message });
+  }
+
 });
 
 module.exports = router;
