@@ -30,13 +30,12 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - name: setup mariadb
+      run: |
+       sudo apt-get install -y mariadb-client
+       mysql -uroot -e "CREATE DATABASE tonorp"
 
-  -name: setup mariadb
-     run: |
-      sudo apt-get install -y mariadb-client
-      mysql -uroot -e "CREATE DATABASE tonorp"
-
-  - name: install dependencies
+    - name: install dependencies
       run: npm install
     - run: npm ci
     - run: npm run build --if-present
