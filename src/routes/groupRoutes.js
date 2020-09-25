@@ -9,13 +9,14 @@ const { userMeeting } = require('../controllers/meeting');
 
 const passport = require('../middlewares/auth/index');
 
-// Initialize middlewares
-router.use(express.json());
-
 // global variables
 const authenticateUser = passport.authenticate('jwt', { session: false });
 
-router.get('/user-groups/', authenticateUser, async (request, response) => {
+// Initialize middlewares
+router.use(express.json());
+router.use(authenticateUser)
+
+router.get('/user-groups/', async (request, response) => {
   const { id: userId } = request.user;
 
   try {
@@ -32,7 +33,7 @@ router.get('/user-groups/', authenticateUser, async (request, response) => {
   }
 });
 
-router.post('/create-group', authenticateUser, async (request, response) => {
+router.post('/create-group', async (request, response) => {
   const { name } = request.body;
   try {
     const group = await addGroup(request.user.id, name);
@@ -44,7 +45,7 @@ router.post('/create-group', authenticateUser, async (request, response) => {
   }
 });
 
-router.post('/create-meeting', authenticateUser, async (request, response) => {
+router.post('/create-meeting', async (request, response) => {
   const { attendanceGroupId, type } = request.body;
   try {
     const meeting = await userMeeting(attendanceGroupId, type);
