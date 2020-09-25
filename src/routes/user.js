@@ -20,18 +20,20 @@ router.get('/:user_id', async (request, response) => {
     response.status(400).json({ error: 'Invalid user id type' });
   }
 
-  const user = userController.returnUser(parseInt(user_id));
+  const user = await userController.returnUser(parseInt(user_id, 10));
   return response.send(user);
 });
 
 router.post('/register', async (request, response) => {
   try {
     const user = await userController.addUser(request.body);
-    return response.send(user);
+    return response
+      .status(201)
+      .json({ user, error: false, message: 'registration successful' });
   } catch (error) {
-    return response.status(400).json({ error: error.message })
+    return response.status(400).json({ error: true, message: error.message });
   }
 });
 
-
 module.exports = router;
+

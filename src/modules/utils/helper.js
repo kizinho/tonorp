@@ -17,4 +17,11 @@ helper.generateRandomString = (stringLength) => {
   return str;
 };
 
+/** Check if a date is valid
+ * @param {String} d - Date you're validating
+ */
+helper.isValidDate = (d) => {
+  return (new Date(d) !== "Invalid Date") && !isNaN(new Date(d));
+};
+
 module.exports = helper;

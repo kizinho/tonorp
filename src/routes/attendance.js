@@ -1,11 +1,15 @@
 const router = require('express').Router();
 
 // Application modules
+const passport = require('../middlewares/auth/index');
 const { userAttendances } = require('../controllers/attendance');
 
-router.get('/user-groups/:userId', (req, res) => {
-  const user_groups = userAttendances(req.params.userID);
-  res.send('user attendance');
+const authenticateUser = passport.authenticate('jwt', { session: false });
+
+router.get('/', authenticateUser, async (req, res) => {
+  const attendances = await userAttendances(req.user.id);
+  return res.send(req.user);
 });
+
 
 module.exports = router;

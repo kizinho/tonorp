@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   attendanceRoll.init(
     {
       attendanceGroupId: DataTypes.INTEGER,
-      time: DataTypes.DATE,
+      time: DataTypes.TIME,
       start: DataTypes.DATEONLY,
       end: DataTypes.DATEONLY,
     },
