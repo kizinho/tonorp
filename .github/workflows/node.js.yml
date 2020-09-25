@@ -22,9 +22,6 @@ jobs:
     services:
       mysql:
         image: mariadb
-        run: |
-          sudo apt-get install -y mariadb-client
-          mysql -uroot -e "CREATE DATABASE tonorp"
 
 
     steps:
@@ -33,6 +30,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - name: setup mariadb
+      run: |
+       sudo apt-get install -y mariadb-client
+       mysql -uroot -e "CREATE DATABASE tonorp"
+
     - name: install dependencies
       run: npm install
     - run: npm ci
