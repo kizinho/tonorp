@@ -7,40 +7,52 @@ const { userGroups } = require('../controllers/getUserGroups');
 const { addGroup, addUserToGroup, usersInGroup, createAttendanceROll } = require('../controllers/groups');
 const { userMeeting } = require('../controllers/meeting');
 
+const passport = require('../middlewares/auth/index');
+
 // Initialize middlewares
 router.use(express.json());
 
-router.get('/user-groups/:userId', async (request, response) => {
-  const { userId } = request.params;
+// global variables
+const authenticateUser = passport.authenticate('jwt', { session: false });
 
-  if (typeof parseInt(userId, 10) !== 'number') {
-    return response.status(400).json({ error: 'userId should be a number' });
-  }
+router.get('/user-groups/', authenticateUser, async (request, response) => {
+  const { id: userId } = request.user;
+
   try {
     const user_groups = await userGroups(parseInt(userId, 10));
-    return response.send(user_groups);
+    return response.status(200).json({
+      error: false,
+      message: 'Groups successfully returned',
+      user_groups,
+    });
   } catch (error) {
-    return response.status(400).json({ error: error.message });
+    return response
+      .status(400)
+      .json({ error: true, message: "Can't return groups for user" });
   }
 });
 
-router.post('/create-group', async (request, response) => {
-  const { name, ownerId } = request.body;
+router.post('/create-group', authenticateUser, async (request, response) => {
+  const { name } = request.body;
   try {
-    const group = await addGroup(ownerId, name);
-    return response.send(group);
+    const group = await addGroup(request.user.id, name);
+    return response
+      .status(201)
+      .json({ error: false, message: 'Group created successfully', group });
   } catch (error) {
-    return response.status(400).json({ error: error.message });
+    return response.status(400).json({ error: true, message: error.message });
   }
 });
 
-router.post('/create-meeting', async (request, response) => {
+router.post('/create-meeting', authenticateUser, async (request, response) => {
   const { attendanceGroupId, type } = request.body;
   try {
     const meeting = await userMeeting(attendanceGroupId, type);
-    return response.send(meeting);
+    return response
+      .status(201)
+      .json({ error: false, message: 'Meeting Created', meeting });
   } catch (error) {
-    return response.status(400).json({ error: error.message });
+    return response.status(400).json({ error: true, message: error.message });
   }
 });
 router.post('/join-group', async (request, response) => {
