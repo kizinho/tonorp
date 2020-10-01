@@ -1,3 +1,9 @@
-const { Client } = require('@googlemaps/google-maps-services-js');
+// Third-party dependencies
+require('dotenv').config();
 
-const client = new Client({});
+// Application modules
+const BaseManager = require('./locationManager');
+
+class LocationManager extends BaseManager {}
+
+module.exports = LocationManager;
