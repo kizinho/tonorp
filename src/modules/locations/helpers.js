@@ -5,7 +5,7 @@ const { DistanceFormatError } = require('./locationErrors');
  * @returns {object} details of validation
  */
 function isValidLocation(location) {
-  const cordRegex = /^(-)?\d+\.\d+$/;
+  const cordRegex = /^(-)?\d+(\.\d+)?$/;
 
   const returnedObject = {
     valid: true,
