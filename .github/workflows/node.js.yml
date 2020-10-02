@@ -5,7 +5,7 @@ name: Tonorp CI
 
 on:
   push:
-    branches: [ master, melody, kizito ]
+    branches: [ master ]
   pull_request:
     branches: [ master, development ]
 
@@ -26,6 +26,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: password
           DB_NAME: tonorp
           DB_PASS: password
+          DB_USER: tonorp
         ports:
           - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
@@ -41,7 +42,9 @@ jobs:
       run: |
        sudo apt-get install -y mysql-client
        sudo systemctl start mysql
-       mysql --host localhost -uroot -ppassword  -e "CREATE DATABASE IF NOT EXISTS tonorp;"
+       sudo mysql --host localhost -uroot -ppassword  -e "CREATE USER 'tonorp'@'localhost' IDENTIFIED BY 'password';"
+       sudo mysql --host localhost -uroot -ppassword  -e "GRANT ALL PRIVILEGES ON * . * TO 'tonorp'@'localhost';"
+       mysql --host localhost -utonorp -ppassword  -e "CREATE DATABASE IF NOT EXISTS tonorp;"
 
     - name: install dependencies
       run: npm install
