@@ -32,7 +32,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: setup mariadb
       run: |
-       sudo apt-get install -y mariadb-client
+       sudo apt-get install -y mysql-client
        mysql -uroot -e "CREATE DATABASE tonorp"
 
     - name: install dependencies
