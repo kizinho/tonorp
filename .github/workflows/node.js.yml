@@ -5,7 +5,7 @@ name: Tonorp CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, melody, kizito ]
   pull_request:
     branches: [ master, development ]
 
@@ -40,7 +40,7 @@ jobs:
     - name: setup mysql
       run: |
        sudo apt-get install -y mysql-client
-       mysql --host 127.0.0.1 -uroot -ppassword  -e "CREATE DATABASE IF NOT EXISTS tonorp;"
+       mysql --host localhost -uroot -ppassword  -e "CREATE DATABASE IF NOT EXISTS tonorp;"
 
     - name: install dependencies
       run: npm install

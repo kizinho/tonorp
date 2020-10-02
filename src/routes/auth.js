@@ -1,11 +1,10 @@
 const express = require('express');
-const jwt = require('jsonwebtoken');
 
 const router = require('express').Router();
 
 // Application modules
 const { validateLogin } = require('../controllers/users');
-const { generateRandomString } = require('../modules/utils/helper');
+const { generateToken } = require('../modules/utils/helper');
 
 // initialize middlewares
 router.use(express.json());
@@ -21,9 +20,8 @@ router.post('/login', async (req, res) => {
     /* handle error */
     return res.status(401).json({ error: true, message: e.message });
   }
-  const randomString = generateRandomString(3);
-  const token = jwt.sign({ id: user.id, randomString }, process.env.SECRET_KEY);
 
+  const token = generateToken();
   return res
     .status(200)
     .json({ error: false, message: 'Login successful', token });
