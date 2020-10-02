@@ -30,7 +30,7 @@ helper.isValidDate = (d) => {
 };
 
 helper.generateToken = (user) => {
-  const randomString = this.generateRandomString(3);
+  const randomString = helper.generateRandomString(3);
   const token = jwt.sign({ id: user.id, randomString }, process.env.SECRET_KEY);
   return token;
 };
