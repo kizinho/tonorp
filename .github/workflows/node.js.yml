@@ -21,7 +21,11 @@ jobs:
 
     services:
       mysql:
-        image: mariadb
+        image: mysql:5.7
+        env:
+          DB_NAME: 'tonorp'
+        ports:
+          - 3306
 
 
     steps:
@@ -30,7 +34,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: setup mariadb
+    - name: setup mysql
       run: |
        sudo apt-get install -y mysql-client
        mysql -uroot -e "CREATE DATABASE tonorp"
