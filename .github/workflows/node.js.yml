@@ -24,7 +24,8 @@ jobs:
         image: mysql:5.7
         env:
           MYSQL_ROOT_PASSWORD: password
-          DB_NAME: 'tonorp'
+          DB_NAME: tonorp
+          DB_PASS: password
         ports:
           - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
@@ -39,7 +40,7 @@ jobs:
     - name: setup mysql
       run: |
        sudo apt-get install -y mysql-client
-       mysql --host 127.0.0.1 -u root -p password  -e "CREATE DATABASE IF NOT EXISTS tonorp;"
+       mysql --host 127.0.0.1 -uroot -ppassword  -e "CREATE DATABASE IF NOT EXISTS tonorp;"
 
     - name: install dependencies
       run: npm install
