@@ -38,7 +38,7 @@ jobs:
     - name: setup mysql
       run: |
        sudo apt-get install -y mysql-client
-       mysql -uroot -e "CREATE DATABASE tonorp"
+       mysql --host 127.0.0.1 -uroot -e "CREATE DATABASE IF NOT EXISTS tonorp"
 
     - name: install dependencies
       run: npm install
