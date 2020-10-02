@@ -7,7 +7,7 @@ on:
   push:
     branches: [ master ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, development ]
 
 jobs:
   test:
@@ -21,7 +21,14 @@ jobs:
 
     services:
       mysql:
-        image: mariadb
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          DB_NAME: tonorp
+          DB_PASS: password
+        ports:
+          - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
 
     steps:
@@ -30,10 +37,10 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: setup mariadb
+    - name: setup mysql
       run: |
-       sudo apt-get install -y mariadb-client
-       mysql -uroot -e "CREATE DATABASE tonorp"
+       sudo apt-get install -y mysql-client
+       mysql --host 127.0.0.1 -uroot -ppassword  -e "CREATE DATABASE IF NOT EXISTS tonorp;"
 
     - name: install dependencies
       run: npm install
