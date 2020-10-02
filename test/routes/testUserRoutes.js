@@ -32,7 +32,7 @@ describe('Test user management', () => {
         .send(data)
         .type('json')
         .end((err, res) => {
-          expect(res).to.have.status(200);
+          expect(res).to.have.status(201);
           done();
         });
     });
