@@ -1,9 +1,11 @@
+/* eslint-disable camelcase */
 const io = require('socket.io')();
 
 const {
   sendGroupMessage,
   sendPersonalMessage,
 } = require('./controllers/socketIoChat');
+// eslint-disable-next-line no-unused-vars
 const { JoinUserToGroup } = require('./controllers/socketIoGroup');
 
 let userIds = 1;
