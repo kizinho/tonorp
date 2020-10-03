@@ -48,6 +48,5 @@ jobs:
 
     - name: install dependencies
       run: npm install
-    - run: npm ci
     - run: npm run build --if-present
     - run: npm test

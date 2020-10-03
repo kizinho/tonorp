@@ -16,8 +16,8 @@ const data = {
   firstName: 'Melody',
   lastName: 'Daniel',
   username: 'melodyogonna',
-  email: 'meodkdkdk@jjj.j',
-  password: 'kskskkkskks',
+  email: 'meodkdkdk@jjj.jj',
+  password: 'ksksk',
 };
 
 describe('Test user management', () => {

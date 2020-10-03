@@ -3,6 +3,7 @@ const argon2 = require('argon2');
 const model = require('../../models/index');
 const Validate = require('../modules/utils/ValidateUser');
 const { hash } = require('../modules/utils/hashPassword');
+const InvalidUserDetails = require('../modules/errors/invalidUserDetails');
 
 // Validates and registers a user to the app
 const addUser = async (userDetails, user = model.User) => {
@@ -13,7 +14,10 @@ const addUser = async (userDetails, user = model.User) => {
   const validateuser = new Validate(userDetails);
 
   if (!validateuser.validate()) {
-    throw new Error('Invalid user details');
+    throw new InvalidUserDetails(
+      validateuser.returnErrors(),
+      'Invalid user details'
+    );
   }
 
   try {
