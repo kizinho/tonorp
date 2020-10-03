@@ -4,7 +4,12 @@ const router = express.Router();
 
 // Application modules
 const { userGroups } = require('../controllers/getUserGroups');
-const { addGroup, addUserToGroup, usersInGroup, createAttendanceROll } = require('../controllers/groups');
+const {
+  addGroup,
+  addUserToGroup,
+  usersInGroup,
+  createAttendanceROll,
+} = require('../controllers/groups');
 const { userMeeting } = require('../controllers/meeting');
 
 const passport = require('../middlewares/auth/index');
@@ -14,7 +19,7 @@ const authenticateUser = passport.authenticate('jwt', { session: false });
 
 // Initialize middlewares
 router.use(express.json());
-router.use(authenticateUser)
+router.use(authenticateUser);
 
 router.get('/user-groups/', async (request, response) => {
   const { id: userId } = request.user;
@@ -64,7 +69,6 @@ router.post('/join-group', async (request, response) => {
   } catch (error) {
     return response.status(400).json({ error: error.message });
   }
-
 });
 router.get('/user-in-groups', async (request, response) => {
   const { groupId } = request.body;
@@ -74,17 +78,20 @@ router.get('/user-in-groups', async (request, response) => {
   } catch (error) {
     return response.status(400).json({ error: error.message });
   }
-
 });
 router.post('/attendance-roll', async (request, response) => {
   const { attendanceGroupId, time, start, end } = request.body;
   try {
-    const rollAttendance = await createAttendanceROll(attendanceGroupId, time, start, end);
+    const rollAttendance = await createAttendanceROll(
+      attendanceGroupId,
+      time,
+      start,
+      end
+    );
     return response.send(rollAttendance);
   } catch (error) {
     return response.status(400).json({ error: error.message });
   }
-
 });
 
 module.exports = router;

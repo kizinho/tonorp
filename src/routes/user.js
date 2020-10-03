@@ -33,7 +33,9 @@ router.post('/register', async (request, response) => {
       .status(201)
       .json({ user, error: false, message: 'registration successful', token });
   } catch (error) {
-    return response.status(400).json({ error: true, message: error.message });
+    return response
+      .status(400)
+      .json({ error: true, message: error.message, details: error.errors });
   }
 });
 
