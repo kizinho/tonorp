@@ -53,7 +53,7 @@ describe('Add users to group', function () {
     const testUser = await User.create(data);
     userId = testUser.id;
     const group = await addGroup(userId, 'adminsNGS');
-    groupId = group.id;
+    groupId = group.groupId;
     return testUser;
   });
   after(async () => {
