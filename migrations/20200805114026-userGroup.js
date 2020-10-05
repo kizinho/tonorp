@@ -21,6 +21,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
+      role: {
+        type: Sequelize.INTEGER,
+        defaultValue: 1,
+      },
       UserId: {
         type: Sequelize.INTEGER,
         references: {
