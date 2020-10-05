@@ -16,8 +16,8 @@ const data = {
   firstName: 'Melody',
   lastName: 'Daniel',
   username: 'melodyogonna',
-  email: 'meodkdkdk@jjj.j',
-  password: 'kskskkkskks',
+  email: 'meodkdkdk@jjj.jj',
+  password: 'ksksk',
 };
 
 describe('Test user management', () => {
@@ -32,7 +32,7 @@ describe('Test user management', () => {
         .send(data)
         .type('json')
         .end((err, res) => {
-          expect(res).to.have.status(200);
+          expect(res).to.have.status(201);
           done();
         });
     });

@@ -5,6 +5,7 @@ const express = require('express');
 
 // Application modules
 const userController = require('../controllers/users');
+const { generateToken } = require('../modules/utils/helper');
 
 // Initialize express router
 const router = express.Router();
@@ -27,13 +28,15 @@ router.get('/:user_id', async (request, response) => {
 router.post('/register', async (request, response) => {
   try {
     const user = await userController.addUser(request.body);
+    const token = generateToken(user);
     return response
       .status(201)
-      .json({ user, error: false, message: 'registration successful' });
+      .json({ user, error: false, message: 'registration successful', token });
   } catch (error) {
-    return response.status(400).json({ error: true, message: error.message });
+    return response
+      .status(400)
+      .json({ error: true, message: error.message, details: error.errors });
   }
 });
 
 module.exports = router;
-

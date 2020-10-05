@@ -44,8 +44,5 @@
   "prettier": {
     "singleQuote": true,
     "semi": true
-  },
-  "engines": {
-    "node": "10.x"
   }
 }
