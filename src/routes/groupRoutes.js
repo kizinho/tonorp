@@ -42,9 +42,10 @@ router.get('/user-groups/', async (request, response) => {
 
 router.post('/create-group', async (request, response) => {
   const { name } = request.body;
+  const { id: userId } = request.user;
 
   try {
-    const group = await addGroup(request.user.id, name);
+    const group = await addGroup(userId, name);
     return response
       .status(201)
       .json({ error: false, message: 'Group created successfully', group });
@@ -67,7 +68,8 @@ router.post('/create-meeting', async (request, response) => {
 });
 
 router.post('/join-group', async (request, response) => {
-  const { userId, groupId } = request.body;
+  const { groupId } = request.body;
+  const { id: userId } = request.user;
 
   try {
     addUserToGroup(userId, groupId);
@@ -84,13 +86,11 @@ router.get('/user-in-groups', async (request, response) => {
 
   try {
     const userInGroup = await usersInGroup(groupId);
-    return response
-      .status(200)
-      .json({
-        userInGroup,
-        error: false,
-        message: 'Uses successfully returned',
-      });
+    return response.status(200).json({
+      userInGroup,
+      error: false,
+      message: 'Uses successfully returned',
+    });
   } catch (error) {
     return response.status(400).json({ error: error.message });
   }
