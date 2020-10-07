@@ -28,8 +28,10 @@ const addGroup = async (userId, name, groupmodel = attendanceGroups) => {
 
   const creategroup = () => {
     const groupId = generateRandomString(7);
+
     return groupmodel
       .create({ name, ownerId: userId, groupId })
+
       .then((group) => {
         addGroupSetting(group);
         return group;
@@ -38,6 +40,7 @@ const addGroup = async (userId, name, groupmodel = attendanceGroups) => {
         if (e.name === 'SequelizeUniqueConstraintError') {
           return creategroup();
         }
+
         throw e;
       });
   };
