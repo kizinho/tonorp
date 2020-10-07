@@ -25,6 +25,9 @@ const forgotPassword = async (email) => {
 };
 
 const resetPassword = async (password, email) => {
+    if (!password) {
+        throw new Error('password required');
+    }
     const validateuser = new Validate({ email });
     if (!validateuser.validateEmail()) {
         throw new Error('Invalid email was provided');
