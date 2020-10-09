@@ -25,7 +25,7 @@ router.post('/login', async (req, res) => {
   const token = generateToken(user);
   return res
     .status(200)
-    .json({ error: false, message: 'Login successful', token });
+    .json({ error: false, message: 'Login successful', token, user });
 });
 
 router.post('/forgot-password', async (req, res) => {

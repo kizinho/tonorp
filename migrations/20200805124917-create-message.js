@@ -10,22 +10,24 @@ module.exports = {
       message: {
         type: Sequelize.TEXT,
       },
-      userGroupsId: {
+      attendanceGroupId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'attendanceGroups',
           key: 'id',
         },
         onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       },
 
-      userId: {
+      UserId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Users',
           key: 'id',
         },
         onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       },
       createdAt: {
         allowNull: false,
