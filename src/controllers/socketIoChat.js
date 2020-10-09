@@ -1,5 +1,6 @@
-const sendGroupMessage = (io, groupName, data) => {
-  io.to(groupName).emit('group message', data);
+/* eslint-disable camelcase */
+const sendGroupMessage = (io, groupId, data) => {
+  io.to(groupId).emit('group message', data);
 };
 
 const sendPersonalMessage = (io, socket_id, data) => {

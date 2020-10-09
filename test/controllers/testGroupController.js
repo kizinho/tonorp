@@ -27,6 +27,8 @@ let userId;
 let groupId;
 
 describe('Create attendance groups', function () {
+  let newGroup;
+
   before(async () => {
     const testUser = await User.create(data);
     userId = testUser.id;
@@ -43,8 +45,23 @@ describe('Create attendance groups', function () {
   });
   it('Test that group and groupSetting is created successfully', async () => {
     const group = await addGroup(userId, 'adminsNGS');
+    newGroup = group;
+
     expect(typeof group.id).to.equal('number');
+
     expect(group.groupId.length).to.equal(7);
+  });
+
+  it('Should test that owner is added to new group', async () => {
+    const userInGroup = await usersInGroup(newGroup.groupId);
+    expect(userInGroup.length).to.be.equal(1);
+  });
+
+  it('Tests weather the owner role is correctly assigned', async () => {
+    const groupUsers = await usersInGroup(newGroup.groupId);
+    const joinTableinfo = groupUsers[0].userGroup;
+    console.log(joinTableinfo);
+    expect(joinTableinfo.role).to.equal(3);
   });
 });
 
@@ -53,9 +70,10 @@ describe('Add users to group', function () {
     const testUser = await User.create(data);
     userId = testUser.id;
     const group = await addGroup(userId, 'adminsNGS');
-    groupId = group.id;
+    groupId = group.groupId;
     return testUser;
   });
+
   after(async () => {
     await attendanceGroups.destroy({
       truncate: { cascade: true, restartIdentity: true },
@@ -66,10 +84,12 @@ describe('Add users to group', function () {
     });
     return true;
   });
+
   it('Test that user is successfully added to group', async () => {
     const added = await addUserToGroup(userId, groupId);
     expect(added).to.be.an('array');
   });
+
   it('Should return users in group', async () => {
     const users = await usersInGroup(groupId);
     expect(users).to.an('array');

@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 const express = require('express');
-const router = express.Router();
 
 // Application modules
 const { userGroups } = require('../controllers/getUserGroups');
@@ -14,6 +13,8 @@ const { userMeeting } = require('../controllers/meeting');
 
 const passport = require('../middlewares/auth/index');
 
+const router = express.Router();
+
 // global variables
 const authenticateUser = passport.authenticate('jwt', { session: false });
 
@@ -26,6 +27,7 @@ router.get('/user-groups/', async (request, response) => {
 
   try {
     const user_groups = await userGroups(parseInt(userId, 10));
+
     return response.status(200).json({
       error: false,
       message: 'Groups successfully returned',
@@ -40,8 +42,10 @@ router.get('/user-groups/', async (request, response) => {
 
 router.post('/create-group', async (request, response) => {
   const { name } = request.body;
+  const { id: userId } = request.user;
+
   try {
-    const group = await addGroup(request.user.id, name);
+    const group = await addGroup(userId, name);
     return response
       .status(201)
       .json({ error: false, message: 'Group created successfully', group });
@@ -52,6 +56,7 @@ router.post('/create-group', async (request, response) => {
 
 router.post('/create-meeting', async (request, response) => {
   const { attendanceGroupId, type } = request.body;
+
   try {
     const meeting = await userMeeting(attendanceGroupId, type);
     return response
@@ -61,26 +66,39 @@ router.post('/create-meeting', async (request, response) => {
     return response.status(400).json({ error: true, message: error.message });
   }
 });
+
 router.post('/join-group', async (request, response) => {
-  const { userId, groupId } = request.body;
-  try {
-    const joinGroup = await addUserToGroup(userId, groupId);
-    return response.send(joinGroup);
-  } catch (error) {
-    return response.status(400).json({ error: error.message });
-  }
-});
-router.get('/user-in-groups', async (request, response) => {
   const { groupId } = request.body;
+  const { id: userId } = request.user;
+
   try {
-    const useInGroup = await usersInGroup(groupId);
-    return response.send(useInGroup);
+    addUserToGroup(userId, groupId);
+    return response
+      .status(200)
+      .json({ error: false, message: 'Joined group successfully' });
   } catch (error) {
     return response.status(400).json({ error: error.message });
   }
 });
+
+router.get('/user-in-groups/:groupId', async (request, response) => {
+  const { groupId } = request.params;
+
+  try {
+    const userInGroup = await usersInGroup(groupId);
+    return response.status(200).json({
+      userInGroup,
+      error: false,
+      message: 'Uses successfully returned',
+    });
+  } catch (error) {
+    return response.status(400).json({ error: error.message });
+  }
+});
+
 router.post('/attendance-roll', async (request, response) => {
   const { attendanceGroupId, time, start, end } = request.body;
+
   try {
     const rollAttendance = await createAttendanceROll(
       attendanceGroupId,

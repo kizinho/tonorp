@@ -42,6 +42,9 @@ const returnUser = async (user_id) => {
   }
 
   const user = await model.User.findByPk(user_id);
+  if (!user) {
+    throw new Error('User does not exist');
+  }
   return user;
 };
 

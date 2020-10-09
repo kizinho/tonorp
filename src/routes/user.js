@@ -14,7 +14,7 @@ const router = express.Router();
 router.use(express.json());
 
 // Define routes
-router.get('/:user_id', async (request, response) => {
+router.get('/user-details', async (request, response) => {
   const { user_id } = request.params;
 
   if (typeof parseInt(user_id, 10) !== 'number') {
