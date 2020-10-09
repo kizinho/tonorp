@@ -1,8 +1,14 @@
 const { attendanceGroups } = require('../../models');
 
 const saveGroupMessage = async (groupId, UserId, message) => {
-  if (typeof attendanceGroupId !== 'number' || typeof UserId !== 'number') {
-    throw new TypeError('User Id and Attendance Group Id must be a number');
+  if (typeof UserId !== 'number') {
+    throw new TypeError('User Id must be a number');
+  }
+
+  if (typeof groupId !== 'string' || groupId.length < 7 || groupId.length > 7) {
+    throw new TypeError(
+      'Group Code must be a string and should have a length of 7'
+    );
   }
 
   try {
