@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     /**
@@ -8,6 +6,44 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
+    await queryInterface.createTable('userGroup', {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER,
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+      role: {
+        type: Sequelize.INTEGER,
+        defaultValue: 1,
+      },
+      UserId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      },
+      attendanceGroupId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'attendanceGroups',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      },
+    });
   },
 
   down: async (queryInterface, Sequelize) => {
@@ -17,5 +53,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-  }
+    await queryInterface.dropTable('userGroup');
+  },
 };
