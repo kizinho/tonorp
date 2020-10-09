@@ -5,11 +5,10 @@ const io = require('socket.io')();
 const {
   sendGroupMessage,
   sendPersonalMessage,
-} = require('./controllers/socketIoChat').default;
+} = require('./controllers/socketIoChat');
+
 // eslint-disable-next-line no-unused-vars
 const { JoinUserToGroup } = require('./controllers/socketIoGroup');
-
-const connectedUsers = {};
 
 io.on('connection', (socket) => {
   socket.emit('connectionSuccess', "You're connected");
@@ -19,21 +18,14 @@ io.on('connection', (socket) => {
     socket.user_id = userId;
   });
 
-  socket.on('group message', (message) => {
-    sendGroupMessage(socket, 'melody', message);
+  socket.on('group message', (message, groupId) => {
+    sendGroupMessage(socket, groupId, message);
   });
 
   // Send personal message
-  socket.on('personal message', (message) => {
-    const { sockets } = io.sockets;
-
+  socket.on('personal message', (message, chatId) => {
     // message = JSON.parse(message);
-    Object.keys(sockets).forEach((socket_id) => {
-      const current_socket = sockets[socket_id];
-      if (current_socket.user_id === 3) {
-        return sendPersonalMessage(socket, socket_id, message);
-      }
-    });
+    return sendPersonalMessage(io, chatId, message);
   });
 
   socket.on('disconnect', () => {
