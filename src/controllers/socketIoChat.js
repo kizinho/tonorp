@@ -3,7 +3,7 @@
 const { saveGroupMessage } = require('./messages');
 
 const sendGroupMessage = (io, groupId, data) => {
-  saveGroupMessage(groupId, data.senderId, data.message);
+  saveGroupMessage(groupId, data.userId, data.message);
 
   io.to(groupId).emit('group message', data);
 };
