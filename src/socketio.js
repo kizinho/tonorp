@@ -19,7 +19,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('group message', (message, groupId) => {
-    sendGroupMessage(socket, groupId, message);
+    sendGroupMessage(io, groupId, message);
   });
 
   // Send personal message

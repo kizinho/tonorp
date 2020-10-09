@@ -1,7 +1,7 @@
 const { attendanceGroups } = require('../../models');
 
 const saveGroupMessage = async (groupId, UserId, message) => {
-  if (typeof UserId !== 'number') {
+  if (typeof parseInt(UserId, 10) !== 'number') {
     throw new TypeError('User Id must be a number');
   }
 
@@ -17,7 +17,6 @@ const saveGroupMessage = async (groupId, UserId, message) => {
         groupId,
       },
     });
-
     const newMessage = await group.createMessage({
       UserId,
       message,
@@ -32,7 +31,8 @@ const saveGroupMessage = async (groupId, UserId, message) => {
 
     const error = new Error('Could not save message to database');
     error.originMessage = e.message;
-    throw error;
+
+    console.log(e.message);
   }
 };
 
