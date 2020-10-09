@@ -19,8 +19,7 @@ const addUserToGroup = async (userId, groupId) => {
 
     await group.addUser(user);
 
-    const users = await group.getUsers();
-    return users;
+    return group;
   } catch (e) {
     /* handle error */
     throw new Error('Could not add user to grop');
