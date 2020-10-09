@@ -6,7 +6,7 @@ module.exports = class Details {
     }
 
     this.errors = new Set();
-
+    
     this.firstName = userDetails.firstName;
     this.lastName = userDetails.lastName;
     this.email = userDetails.email;
@@ -36,7 +36,7 @@ module.exports = class Details {
       code: 2,
       detail: 'Email is not correctly formatted',
     };
-
+    console.log(this.email)
     if (email_regex.test(this.email)) {
       this.errors.delete(emailError);
       return true;
