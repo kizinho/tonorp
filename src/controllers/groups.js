@@ -1,7 +1,7 @@
 const {
   attendanceGroups,
   User,
-  attendanceRoll,
+  attendanceRoll, groupSetting
 } = require('../../models/index');
 const {
   generateRandomString,
@@ -117,6 +117,41 @@ const createAttendanceROll = async (attendanceGroupId, time, start, end) => {
   });
   return createRoll;
 };
+const geoUpdate = async (groupSettingDetails, group = groupSetting) => {
+  if (!groupSettingDetails.latitude && !groupSettingDetails.longtitude) {
+    throw TypeError('latitude and longtitude are required');
+  }
+
+  const updateData = await group.update(groupSettingDetails, {
+    where: {
+      attendanceGroupId: groupSettingDetails.attendanceGroupId
+    }
+  });
+  return updateData;
+}
+
+
+const updateGroupSetting = async (groupSettingDetails, group = groupSetting) => {
+  if (!groupSettingDetails) {
+    throw TypeError(`Update group setting expects an object, got ${typeof groupSettingDetails}`);
+  }
+  if (typeof groupSettingDetails.attendanceGroupId !== 'number') {
+    throw TypeError('Invalid group id');
+  }
+
+  if (groupSettingDetails.goeFence === 1) {
+    const geoData = geoUpdate(groupSettingDetails);
+    return geoData;
+  }
+  const updateData = await group.update(groupSettingDetails, {
+    where: {
+      attendanceGroupId: groupSettingDetails.attendanceGroupId
+    }
+  });
+  
+  return updateData;
+
+}
 
 module.exports = {
   addGroup,
@@ -124,4 +159,5 @@ module.exports = {
   usersInGroup,
   createAttendanceROll,
   changeUserRoleInGroup,
+  updateGroupSetting
 };

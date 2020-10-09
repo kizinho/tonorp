@@ -7,7 +7,7 @@ const {
   addGroup,
   addUserToGroup,
   usersInGroup,
-  createAttendanceROll,
+  createAttendanceROll, updateGroupSetting
 } = require('../controllers/groups');
 const { userMeeting } = require('../controllers/meeting');
 
@@ -111,5 +111,20 @@ router.post('/attendance-roll', async (request, response) => {
     return response.status(400).json({ error: error.message });
   }
 });
+
+router.put('/update-group-setting', async (request, response) => {
+
+  try {
+    await updateGroupSetting(request.body);
+    return response
+      .status(200)
+      .json({ error: false, message: 'Group setting updated succefully' });
+  } catch (error) {
+    return response.status(401).json({ error: true, message: error.message });
+  }
+
+
+
+})
 
 module.exports = router;
