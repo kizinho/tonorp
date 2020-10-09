@@ -81,8 +81,8 @@ router.post('/join-group', async (request, response) => {
   }
 });
 
-router.get('/user-in-groups', async (request, response) => {
-  const { groupId } = request.body;
+router.get('/user-in-groups/:groupId', async (request, response) => {
+  const { groupId } = request.params;
 
   try {
     const userInGroup = await usersInGroup(groupId);
