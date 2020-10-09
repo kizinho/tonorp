@@ -1,16 +1,22 @@
-const { message: groupMessage } = require('../../models');
+const { attendanceGroups } = require('../../models');
 
-const saveGroupMessage = async (attendanceGroupId, UserId, message) => {
+const saveGroupMessage = async (groupId, UserId, message) => {
   if (typeof attendanceGroupId !== 'number' || typeof UserId !== 'number') {
     throw new TypeError('User Id and Attendance Group Id must be a number');
   }
 
   try {
-    const newMessage = await groupMessage.create({
-      attendanceGroupId,
+    const group = await attendanceGroups.findOne({
+      where: {
+        groupId,
+      },
+    });
+
+    const newMessage = await group.createMessage({
       UserId,
       message,
     });
+
     return newMessage;
   } catch (e) {
     /* handle error */
