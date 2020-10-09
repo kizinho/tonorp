@@ -1,9 +1,8 @@
 /* eslint-disable camelcase */
-const nodemailer = require("nodemailer");
 const { User } = require('../../models/index');
 const Validate = require('../modules/utils/ValidateUser');
 const { hash } = require('../modules/utils/hashPassword');
-
+const { transporterMail } = require('../modules/utils/mailDetails');
 /** check user email
  * @param {string} email - Email address
  * Checks that a  email address exists in the database
@@ -11,7 +10,7 @@ const { hash } = require('../modules/utils/hashPassword');
 const forgotPassword = async (email) => {
     const validateuser = new Validate({ email });
     if (!validateuser.validateEmail()) {
-        throw new Error('Invalid email was provided');
+        throw new TypeError('Invalid email was provided');
     }
     const getEmail = await User.findOne({
         where: {
@@ -19,24 +18,14 @@ const forgotPassword = async (email) => {
         }
     });
     if (getEmail) {
-        
-        // create reusable transporter object using the default SMTP transport
-        const transporter = nodemailer.createTransport({
-            host: "smtp.mailtrap.io",
-            port: 2525,
-            secure: false,
-            auth: {
-                user: '3d304ab625e965',
-                pass: '60b456bc30222a',
-            },
-        });
         const pin = Math.floor(1000 + Math.random() * 9000);
-      await transporter.sendMail({
-            from: '"Fred Foo 👻" <foo@example.com>', // sender address
-            to: "bar@example.com, baz@example.com", // list of receivers
-            subject: "Hello ✔", // Subject line
-            text: "Hello world?", // plain text body
-            html: "<b>Hello world?</b>", // html body
+        const transporter = await transporterMail(2525, 'smtp.mailtrap.io', false, '3d304ab625e965', '60b456bc30222a');
+
+        await transporter.sendMail({
+            from: 'support@tornop@gmail.com',
+            to: email,
+            subject: "Reset Password Pin",
+            html: `<b>Hello </b>  ${getEmail.username} your reset code is : ${pin}`,
         });
 
         return pin;

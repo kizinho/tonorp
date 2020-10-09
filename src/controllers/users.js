@@ -4,7 +4,7 @@ const model = require('../../models/index');
 const Validate = require('../modules/utils/ValidateUser');
 const { hash } = require('../modules/utils/hashPassword');
 const InvalidUserDetails = require('../modules/errors/invalidUserDetails');
-
+const { transporterMail } = require('../modules/utils/mailDetails');
 // Validates and registers a user to the app
 const addUser = async (userDetails, user = model.User) => {
   if (!userDetails) {
@@ -26,6 +26,15 @@ const addUser = async (userDetails, user = model.User) => {
     userDetails.password = password;
 
     const new_user = await user.create(userDetails);
+    const transporter = await transporterMail(2525, 'smtp.mailtrap.io', false, '3d304ab625e965', '60b456bc30222a');
+
+    await transporter.sendMail({
+      from: 'support@tornop@gmail.com',
+      to: userDetails.email,
+      subject: "Success Registration",
+      html: `<b>Hello </b>  ${userDetails.username} your registration was successful`,
+    });
+
     return new_user;
   } catch (e) {
     /* handle error */
