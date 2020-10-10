@@ -1,5 +1,5 @@
-const { personalChat } = require('../../models/index');
-const { userGroups } = require('./getUserGroups');
+const { personalChat } = require('../../../models/index');
+const { userGroups } = require('../getUserGroups');
 
 const JoinUserToGroup = async (io, id) => {
   try {
