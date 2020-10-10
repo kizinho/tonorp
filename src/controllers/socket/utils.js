@@ -7,6 +7,10 @@ const messagesInGroup = async (groupId, offsetIndex) => {
     },
   });
 
+  if (!group) {
+    throw new Error('group does not exist');
+  }
+
   const messages = await group.getMessages({
     offset: offsetIndex,
     limit: 100,
