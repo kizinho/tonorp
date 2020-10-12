@@ -44,10 +44,7 @@ const changeUserRoleInGroup = async (roleNumber, userId, attendanceGroupId) => {
     },
   });
 
-  const joinTable = userInGroup[0].userGroup;
-  joinTable.role = roleNumber;
-  await joinTable.save();
-  return joinTable;
+  return userInGroup;
 };
 
 const addGroup = async (userId, name, groupmodel = attendanceGroups) => {
