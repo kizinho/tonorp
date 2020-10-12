@@ -26,12 +26,18 @@ const addUser = async (userDetails, user = model.User) => {
     userDetails.password = password;
 
     const new_user = await user.create(userDetails);
-    const transporter = await transporterMail(2525, 'smtp.mailtrap.io', false, '3d304ab625e965', '60b456bc30222a');
+    const transporter = await transporterMail(
+      2525,
+      'smtp.mailtrap.io',
+      false,
+      '3d304ab625e965',
+      '60b456bc30222a'
+    );
 
     await transporter.sendMail({
       from: 'support@tornop@gmail.com',
       to: userDetails.email,
-      subject: "Success Registration",
+      subject: 'Success Registration',
       html: `<b>Hello </b>  ${userDetails.username} your registration was successful`,
     });
 
@@ -50,7 +56,7 @@ const returnUser = async (user_id) => {
     );
   }
 
-  const user = await model.User.findByPk(user_id);
+  const user = await model.User.scope('removePassword').findByPk(user_id);
   if (!user) {
     throw new Error('User does not exist');
   }

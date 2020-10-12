@@ -10,7 +10,7 @@ const sendGroupMessage = async (io, groupId, data) => {
   const message = {
     sender: user,
     message: newMessage.message,
-    sentAt: newMessage.createAt,
+    sentAt: newMessage.createdAt,
     groupId,
   };
 

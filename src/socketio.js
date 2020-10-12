@@ -32,7 +32,7 @@ io.on('connection', (socket) => {
   // Return messages sent in a group
   socket.on('messages in group', async (groupId, offsetIndex) => {
     const messages = await messagesInGroup(groupId, offsetIndex);
-    socket.to(groupId).emit('messages in group', messages);
+    io.to(socket.id).emit('messages in group', messages);
   });
 
   socket.on('disconnect', () => {

@@ -99,10 +99,11 @@ router.get('/user-in-groups/:groupId', async (request, response) => {
 
   try {
     const userInGroup = await usersInGroup(groupId);
+
     return response.status(200).json({
       userInGroup,
       error: false,
-      message: 'Uses successfully returned',
+      message: 'Users successfully returned',
     });
   } catch (error) {
     return response.status(400).json({ error: error.message });
