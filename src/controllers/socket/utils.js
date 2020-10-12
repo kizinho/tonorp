@@ -1,4 +1,4 @@
-const { attendanceGroups } = require('../../../models');
+const { attendanceGroups, User } = require('../../../models');
 
 const messagesInGroup = async (groupId, offsetIndex) => {
   const group = await attendanceGroups.findOne({
@@ -14,6 +14,11 @@ const messagesInGroup = async (groupId, offsetIndex) => {
   const messages = await group.getMessages({
     offset: offsetIndex,
     limit: 100,
+    include: [
+      {
+        model: User,
+      },
+    ],
   });
 
   return messages;
