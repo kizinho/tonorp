@@ -69,15 +69,28 @@ router.post('/create-meeting', async (request, response) => {
 
 router.post('/join-group', async (request, response) => {
   const { groupId } = request.body;
+
+  if (
+    !groupId ||
+    typeof groupId !== 'string' ||
+    groupId.length < 7 ||
+    groupId.length > 7
+  ) {
+    return response
+      .status(400)
+      .json({ error: true, message: 'Group Code is invalid' });
+  }
+
   const { id: userId } = request.user;
 
   try {
-    addUserToGroup(userId, groupId);
+    const group = await addUserToGroup(userId, groupId);
+
     return response
       .status(200)
-      .json({ error: false, message: 'Joined group successfully' });
+      .json({ error: false, message: 'Joined group successfully', group });
   } catch (error) {
-    return response.status(400).json({ error: error.message });
+    return response.status(400).json({ error: true, message: error.message });
   }
 });
 
@@ -86,10 +99,11 @@ router.get('/user-in-groups/:groupId', async (request, response) => {
 
   try {
     const userInGroup = await usersInGroup(groupId);
+
     return response.status(200).json({
       userInGroup,
       error: false,
-      message: 'Uses successfully returned',
+      message: 'Users successfully returned',
     });
   } catch (error) {
     return response.status(400).json({ error: error.message });
