@@ -122,6 +122,7 @@ const geoUpdate = async (groupSettingDetails, group = groupSetting) => {
     throw TypeError('latitude and longtitude are required');
   }
 
+  
   const updateData = await group.update(groupSettingDetails, {
     where: {
       attendanceGroupId: groupSettingDetails.attendanceGroupId

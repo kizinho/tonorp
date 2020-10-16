@@ -1,11 +1,13 @@
 /* eslint-disable camelcase */
 // Third party modules
 require('dotenv');
+const { response } = require('express');
 const express = require('express');
 
 // Application modules
 const userController = require('../controllers/users');
 const { generateToken } = require('../modules/utils/helper');
+const { route } = require('./attendance');
 
 // Initialize express router
 const router = express.Router();
@@ -38,5 +40,17 @@ router.post('/register', async (request, response) => {
       .json({ error: true, message: error.message, details: error.errors });
   }
 });
+
+
+router.post('/update-profile', async (request, response) => {
+  try {
+    await userController.updateProfile(request.body);
+    return response.status(200).json({ error: false, message: 'profile updated successfully' });
+  } catch (e) {
+    return response.status(400).json({ error: true, message: e.message });
+  }
+
+
+})
 
 module.exports = router;

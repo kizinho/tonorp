@@ -76,4 +76,25 @@ const validateLogin = async (email, password) => {
   throw new Error('Invalid password');
 };
 
-module.exports = { addUser, validateLogin, returnUser };
+
+const updateProfile = async (userDetails, user = model.User) => {
+  if (typeof userDetails.userId !== 'number') {
+    throw TypeError('Invalid user , user is required');
+  }
+
+  const updateUser = await user.update(userDetails, {
+    where: {
+      id: userDetails.userId
+    }
+  });
+
+  return updateUser;
+
+}
+const updateProfilePhoto = async ()=>{
+
+
+  
+}
+
+module.exports = { addUser, validateLogin, returnUser, updateProfile };
